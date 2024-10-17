@@ -41,7 +41,7 @@
 	<div class="container mx-auto px-4 max-w-4xl">
 		<section class="pt-24 md:pt-28">
 			<article class="py-8 md:py-12">
-				<article class="font-hero text-5xl md:text-5xl lg:text-6xl font-extrabold 2xl:text-7xl">
+				<article class="font-hero text-4xl md:text-5xl lg:text-6xl font-extrabold 2xl:text-7xl text-center md:text-left">
 					<div>ANTI-IMPERIALIST</div>
 					<div>SCHOLARS COLLECTIVE</div>
 				</article>
@@ -49,8 +49,12 @@
 			<div
 				class="intro bg-[#FF6347] md:bg-transparent flex flex-col md:flex-row items-center p-6 md:p-12 lg:p-20 text-lg md:text-xl lg:text-2xl shadow-[inset_0_0_1rem_1.5rem_#FF6347] rounded"
 			>
-				<div class="w-full md:w-1/3 md:order-last mb-6 md:mb-0 md:ml-8">
-					<img class="w-full md:max-w-xs mx-auto" src="/poppy.png" alt="AISC logo">
+				<div class="w-full md:w-1/3 md:order-last mb-6 md:mb-0 md:ml-8 h-48 md:h-auto">
+					<img 
+						class="w-full h-full object-cover md:object-contain mx-auto" 
+						src="/poppy.png" 
+						alt="AISC logo"
+					>
 				</div>
 				<div class="w-full md:w-2/3 p-4 pt-0 md:p-0 mt-6 md:mt-0">
 					The Anti-Imperialist Scholars Collective (AISC) is a global group of scholars committed to
