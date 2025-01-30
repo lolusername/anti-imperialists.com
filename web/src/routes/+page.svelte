@@ -49,7 +49,7 @@
 							{#each data.blogs as post}
 								<article class="mb-8 p-6 border-2 border-[#2E8B57] transform transition-transform hover:scale-105">
 									<h4 class="font-hero text-xl md:text-2xl font-semibold mb-3">{post.title}</h4>
-									<p class="text-sm md:text-base mb-4">{post.preview}</p>
+									
 									{#if post.author}
 										<p class="text-sm text-gray-400">By {post.author}</p>
 									{/if}

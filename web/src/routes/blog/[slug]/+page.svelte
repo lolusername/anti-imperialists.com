@@ -1,6 +1,7 @@
 <script>
   import { PortableText } from '@portabletext/svelte'
   import Nav from '$lib/components/Nav.svelte';
+  import Footnote from '$lib/components/Footnote.svelte';
   export let data
   const { blog } = data
 
@@ -27,13 +28,9 @@
     });
   }
 
-  // Custom serializers for PortableText
-  const serializers = {
+  const components = {
     marks: {
-      footnote: ({text, mark}) => {
-        const index = footnotes.findIndex(f => f._key === mark._key) + 1;
-        return `<sup class="text-[#FF6347] cursor-pointer hover:text-[#2E8B57]" title="${mark.text}">[${index}]</sup>`;
-      }
+      footnote: Footnote
     }
   }
 </script>
@@ -42,7 +39,7 @@
   <Nav />
   
   <!-- Content wrapper with proper padding for nav -->
-  <div class="pt-24"> <!-- Increased padding-top to account for nav height -->
+  <div class="pt-24">
     <!-- Hero section with full-width image if available -->
     {#if blog.mainImage && getImageUrl(blog.mainImage)}
       <div class="w-full h-[50vh] relative">
@@ -84,7 +81,11 @@
 
         <!-- Article content -->
         <div class="mt-8 prose-headings:text-[#2E8B57] prose-a:text-[#FF6347] prose-a:no-underline hover:prose-a:underline">
-          <PortableText value={blog.body} {serializers} />
+          <PortableText 
+            value={blog.body} 
+            {components}
+            context={{footnotes}} 
+          />
         </div>
 
         <!-- Footnotes section -->
@@ -102,27 +103,6 @@
               {/each}
             </div>
           </section>
-        {/if}
-
-        <!-- Author bio section -->
-        {#if blog.author && blog.authorBio}
-          <footer class="mt-16 border-t border-[#2E8B57] pt-8">
-            <div class="flex items-start gap-6">
-              {#if blog.authorImage && getImageUrl(blog.authorImage)}
-                <img 
-                  src={getImageUrl(blog.authorImage)} 
-                  alt={blog.authorImage.alt || `Photo of ${blog.author}`}
-                  class="w-20 h-20 rounded-full object-cover"
-                />
-              {/if}
-              <div>
-                <h2 class="text-xl font-bold text-[#2E8B57] mb-4">About {blog.author}</h2>
-                <div class="prose-sm prose-invert">
-                  <PortableText value={blog.authorBio} />
-                </div>
-              </div>
-            </div>
-          </footer>
         {/if}
       </article>
     </div>
@@ -142,5 +122,14 @@
     color: #FF6347;
     font-style: normal;
     padding-left: 2rem;
+  }
+  :global(.footnote-number) {
+    color: #FF6347;
+    font-size: 0.75em;
+    font-weight: bold;
+    vertical-align: super;
+    position: relative;
+    top: -0.5em;
+    line-height: 0;
   }
 </style> 
