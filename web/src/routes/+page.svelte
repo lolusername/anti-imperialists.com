@@ -5,11 +5,6 @@
 	let pointsOfUnity = data.pointsOfUnity;
 
 	let isDark = true;
-
-	let upcomingEvents = [
-		{ title: "Anti-Imperialist Conference 2024", date: "June 15-17, 2024", location: "Virtual" },
-		{ title: "Workshop: Critical Perspectives on Global Politics", date: "August 5, 2024", location: "New York City" }
-	];
 </script>
 
 <main class="{isDark ? 'bg-black text-white' : ' text-black'}">
@@ -42,7 +37,7 @@
 			<section class="my-16 relative">
 				<h2 class="font-hero text-4xl md:text-5xl font-bold mb-12 text-[#2E8B57]">Featured Posts and Events</h2>
 				
-				<div class="grid md:grid-cols-2 gap-12">
+				<div class="grid  gap-12">
 					<div class="relative">
 						<h3 class="font-hero text-2xl md:text-3xl lg:text-4xl font-semibold mb-6 pl-4 border-l-4 border-[#2E8B57]">Latest Posts</h3>
 						{#if data.blogs && data.blogs.length > 0}
@@ -59,18 +54,6 @@
 						{:else}
 							<p class="text-gray-400">No posts available</p>
 						{/if}
-					</div>
-					
-					<div class="relative">
-						<h3 class="font-hero text-2xl md:text-3xl lg:text-4xl font-semibold mb-6 pl-4 border-l-4 border-[#2E8B57]">Upcoming Events</h3>
-						{#each upcomingEvents as event}
-							<div class="mb-8 p-6 bg-gradient-to-r from-[#2E8B57] to-[#1a4731] bg-opacity-20 transform transition-transform hover:scale-105">
-								<h4 class="font-hero text-xl md:text-2xl font-semibold mb-3">{event.title}</h4>
-								<p class="text-sm md:text-base"><strong>Date:</strong> {event.date}</p>
-								<p class="text-sm md:text-base mb-4"><strong>Location:</strong> {event.location}</p>
-								<a href="/" class="inline-block mt-2 text-white hover:underline font-bold uppercase tracking-wider">Learn more →</a>
-							</div>
-						{/each}
 					</div>
 				</div>
 			</section>

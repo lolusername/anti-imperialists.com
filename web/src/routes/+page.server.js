@@ -2,7 +2,7 @@ import { client } from '$lib/sanity'
 
 export async function load() {
   const blogs = await client.fetch(`
-    *[_type == "blog"] | order(publishedAt desc)[0...2]{
+    *[_type == "blog" && featured == true ] | order(publishedAt desc) {
       title,
       slug,
       "preview": body[0].children[0].text,
