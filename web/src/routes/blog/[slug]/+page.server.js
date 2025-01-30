@@ -11,7 +11,15 @@ export async function load({ params }) {
       "authorBio": author->bio,
       "authorImage": author->image,
       mainImage,
-      body,
+      body[]{
+        ...,
+        markDefs[]{
+          ...,
+          _type == "footnote" => {
+            ...
+          }
+        }
+      },
       publishedAt
     }
   `, { slug })

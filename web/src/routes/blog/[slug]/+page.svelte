@@ -9,6 +9,33 @@
     if (!image?.image?.asset?.url) return null
     return image.image.asset.url
   }
+
+  // Extract footnotes from body content
+  let footnotes = [];
+  if (blog.body) {
+    blog.body.forEach(block => {
+      if (block.markDefs) {
+        block.markDefs.forEach(mark => {
+          if (mark._type === 'footnote') {
+            footnotes.push({
+              _key: mark._key,
+              text: mark.text
+            });
+          }
+        });
+      }
+    });
+  }
+
+  // Custom serializers for PortableText
+  const serializers = {
+    marks: {
+      footnote: ({text, mark}) => {
+        const index = footnotes.findIndex(f => f._key === mark._key) + 1;
+        return `<sup class="text-[#FF6347] cursor-pointer hover:text-[#2E8B57]" title="${mark.text}">[${index}]</sup>`;
+      }
+    }
+  }
 </script>
 
 <main class="bg-black text-white min-h-screen">
@@ -57,8 +84,25 @@
 
         <!-- Article content -->
         <div class="mt-8 prose-headings:text-[#2E8B57] prose-a:text-[#FF6347] prose-a:no-underline hover:prose-a:underline">
-          <PortableText value={blog.body} />
+          <PortableText value={blog.body} {serializers} />
         </div>
+
+        <!-- Footnotes section -->
+        {#if footnotes.length > 0}
+          <section class="mt-16 pt-8 border-t border-[#2E8B57]">
+            <h2 class="text-2xl font-bold text-[#2E8B57] mb-6">Notes</h2>
+            <div class="space-y-4">
+              {#each footnotes as footnote, i}
+                <div class="flex gap-4 text-sm">
+                  <span class="text-[#FF6347] font-bold">[{i + 1}]</span>
+                  <div class="prose-sm prose-invert">
+                    {footnote.text}
+                  </div>
+                </div>
+              {/each}
+            </div>
+          </section>
+        {/if}
 
         <!-- Author bio section -->
         {#if blog.author && blog.authorBio}
