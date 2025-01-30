@@ -12,9 +12,10 @@
 	}
 </script>
 
-<main class="bg-black text-white min-h-screen">
-	<Nav />
-	<div class="container mx-auto px-4 max-w-6xl pt-24">
+<Nav />
+
+<main class="relative bg-black text-white min-h-screen pt-24">
+	<div class="container mx-auto px-4 max-w-6xl">
 		<h1 class="font-hero text-4xl md:text-5xl lg:text-6xl font-bold mb-12 text-[#2E8B57]">The Pen is My Machete</h1>
 		
 		{#if data.blogs && data.blogs.length > 0}
