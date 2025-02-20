@@ -113,10 +113,6 @@
   :global(.prose) {
     max-width: none;
   }
-  :global(.prose p) {
-    font-family: "ivystyle-tw", serif;
-    line-height: 1.8;
-  }
   :global(.prose blockquote) {
     border-left-color: #2E8B57;
     color: #FF6347;

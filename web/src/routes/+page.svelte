@@ -11,10 +11,11 @@
 	<Nav />
 	<div class="container mx-auto px-4 max-w-4xl">
 		<section class="pt-20 md:pt-28">
-			<article class="py-8 md:py-12">
-				<article class="font-hero text-4xl md:text-5xl lg:text-6xl font-extrabold 2xl:text-7xl text-center md:text-left">
-					<div>ANTI-IMPERIALIST</div>
-					<div>SCHOLARS COLLECTIVE</div>
+			<article class="pt-12 -mb-9 ">
+				<article class="font-hero text-4xl md:text-5xl lg:text-6xl font-extrabold 2xl:text-7xl text-center">
+					<div class=" flex justify-center">
+						<img src="/logo.jpeg" alt="AISC logo" class="transition-all duration-300  rounded-full w-96 bg-white h-96 object-contain shadow-[0_0_2rem_1.5rem_#2E8B57]">
+					</div>
 				</article>
 			</article>
 			<div
@@ -22,8 +23,8 @@
 			>
 				<div class="w-full md:w-1/3 md:order-last mb-6 md:mb-0 md:ml-8 h-48 md:h-auto">
 					<img 
-						class="w-full h-full object-cover md:object-contain mx-auto" 
-						src="/poppy.png" 
+						class="w-full h-full object-cover md:object-contain mx-auto " 
+						src="/protest2.jpg" 
 						alt="AISC logo"
 					>
 				</div>
@@ -34,7 +35,7 @@
 				</div>
 			</div>
 			
-			<section class="my-16 relative">
+			<section class="my-16 relative border-t-8 border-white pt-16">
 				<h2 class="font-hero text-4xl md:text-5xl font-bold mb-12 text-[#2E8B57]">Featured Posts and Events</h2>
 				
 				<div class="grid  gap-12">
