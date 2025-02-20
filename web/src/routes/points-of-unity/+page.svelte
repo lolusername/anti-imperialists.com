@@ -5,9 +5,8 @@
 </script>
 
 <main class="bg-black text-white min-h-screen">
-	<Nav />
-	<div class="container mx-auto px-4 max-w-4xl pt-24 text-lg md:text-xl lg:text-2xl">
-		<h1 class="font-hero text-5xl md:text-6xl lg:text-7xl font-bold mb-12 text-[#2E8B57]">Points of Unity</h1>
+	<div class="container mx-auto px-4 max-w-6xl pt-24 text-md md:text-xl lg:text-2xl">
+		<h1 class="font-hero text-5xl font-bold mb-12 text-center text-[#2E8B57]">Points of Unity</h1>
 		
 		{#if data.pointsOfUnity && data.pointsOfUnity.content}
 			<div class="prose prose-2xl prose-invert max-w-none">

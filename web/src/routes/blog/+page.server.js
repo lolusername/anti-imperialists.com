@@ -2,7 +2,7 @@ import { client } from '$lib/sanity'
 
 export async function load() {
   const blogs = await client.fetch(`
-    *[_type == "blog"] | order(publishedAt desc) {
+    *[_type == "blog"] {
       title,
       slug,
       mainImage,
@@ -12,7 +12,7 @@ export async function load() {
     }
   `)
 
-  // Safely extract preview text from the body
+  // Safely extract preview text from the body and sort by author's last name
   const blogsWithPreviews = blogs.map(blog => {
     let preview = '';
     if (blog.body && Array.isArray(blog.body)) {
@@ -33,6 +33,11 @@ export async function load() {
       ...blog,
       preview
     };
+  }).sort((a, b) => {
+    if (!a.author || !b.author) return 0;
+    const lastNameA = a.author.split(' ')[1].toLowerCase();
+    const lastNameB = b.author.split(' ')[1].toLowerCase();
+    return lastNameA.localeCompare(lastNameB);
   });
 
   return {

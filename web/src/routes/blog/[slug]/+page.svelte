@@ -36,8 +36,6 @@
 </script>
 
 <main class="bg-black text-white min-h-screen">
-  <Nav />
-  
   <!-- Content wrapper with proper padding for nav -->
   <div class="pt-24">
     <!-- Hero section with full-width image if available -->
