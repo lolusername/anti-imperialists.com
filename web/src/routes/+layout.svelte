@@ -5,7 +5,7 @@
 </script>
 
 <Nav />
-<div class="pt-12 md:pt-8">
+<div class="pt-12 md:pt-8 mb-12">
 	<slot></slot>
 </div>
 <SocialLinks />

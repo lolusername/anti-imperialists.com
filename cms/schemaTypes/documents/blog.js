@@ -88,7 +88,7 @@ export const blog = defineType({
             ]
           }
         },
-        {type: 'imageBlock'}
+        {type: 'image'}
       ]
     }),
     defineField({

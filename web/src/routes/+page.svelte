@@ -23,7 +23,7 @@
 						alt="AISC logo"
 					>
 				</div>
-				<div class="w-full md:w-2/3 p-4 pt-0 md:p-0 mt-4 md:mt-0 text-lg sm:text-xl md:text-2xl lg:text-3xl">
+				<div class="w-full md:w-2/3 p-4 pt-0 md:p-0 mt-4 md:mt-0 text-lg sm:text-xl md:text-2xl">
 					The Anti-Imperialist Scholars Collective (AISC) is a group of scholars committed to
 					challenging US-led imperialism and supporting liberation movements of the Global Majority
 					through critical knowledge production and international solidarity.

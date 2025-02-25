@@ -2,6 +2,7 @@
   import { PortableText } from '@portabletext/svelte'
   import Nav from '$lib/components/Nav.svelte';
   import Footnote from '$lib/components/Footnote.svelte';
+  import Image from '$lib/components/Image.svelte';
   export let data
   const { blog } = data
 
@@ -29,6 +30,9 @@
   }
 
   const components = {
+    types: {
+      image: Image
+    },
     marks: {
       footnote: Footnote
     }
@@ -85,23 +89,6 @@
             context={{footnotes}} 
           />
         </div>
-
-        <!-- Footnotes section -->
-        {#if footnotes.length > 0}
-          <section class="mt-16 pt-8 border-t border-[#2E8B57]">
-            <h2 class="text-2xl font-bold text-[#2E8B57] mb-6">Notes</h2>
-            <div class="space-y-4">
-              {#each footnotes as footnote, i}
-                <div class="flex gap-4 text-sm">
-                  <span class="text-[#FF6347] font-bold">[{i + 1}]</span>
-                  <div class="prose-sm prose-invert">
-                    {footnote.text}
-                  </div>
-                </div>
-              {/each}
-            </div>
-          </section>
-        {/if}
       </article>
     </div>
   </div>

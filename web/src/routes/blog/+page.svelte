@@ -1,4 +1,6 @@
 <script>
+	import { PortableText } from '@portabletext/svelte';
+	import Image from '$lib/components/Image.svelte';
 	export let data;
 	const { blogs } = data;
 
@@ -10,6 +12,12 @@
 			day: 'numeric'
 		});
 	}
+
+	const components = {
+		types: {
+			image: Image
+		}
+	};
 </script>
 
 <main class="relative bg-black text-white min-h-screen pt-12">
@@ -39,13 +47,18 @@
 		<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 			{#each blogs as post}
 				<article class="bg-black border-2 border-[#2E8B57] p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+					{#if post.body}
+						<div class="prose text-white max-w-none mb-4">
+							<PortableText 
+								value={post.body} 
+								{components}
+							/>
+						</div>
+					{/if}
 					<h2 class="font-hero text-xl font-semibold mb-3">{post.title}</h2>
 					<div class="flex justify-between items-center gap-4 mt-4">
 						{#if post.author}
 							<p class="text-sm text-gray-400">By {post.author}</p>
-						{/if}
-						{#if post.publishedAt}
-							<p class="text-sm text-gray-400">{formatDate(post.publishedAt)}</p>
 						{/if}
 					</div>
 					<a 

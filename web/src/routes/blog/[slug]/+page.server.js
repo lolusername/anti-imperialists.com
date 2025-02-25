@@ -10,9 +10,18 @@ export async function load({ params }) {
       "author": author->name,
       "authorBio": author->bio,
       "authorImage": author->image,
-      mainImage,
+      mainImage{
+        alt,
+        asset->
+      },
       body[]{
         ...,
+        _type == "image" => {
+          _type,
+          _key,
+          alt,
+          asset->
+        },
         markDefs[]{
           ...,
           _type == "footnote" => {
