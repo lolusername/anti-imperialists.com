@@ -3,8 +3,9 @@
 	import SocialLinks from '$lib/components/SocialLinks.svelte';
 	import Nav from '$lib/components/Nav.svelte';
 </script>
+
 <Nav />
-<SocialLinks />
-<div class="pb-24">
+<div class="pt-12 md:pt-8">
 	<slot></slot>
 </div>
+<SocialLinks />

@@ -19,7 +19,7 @@
 				<div class="w-full md:w-1/3 md:order-last mb-4 md:mb-0 md:ml-8">
 					<img 
 						class="w-full h-48 sm:h-60 md:h-80 object-cover md:object-contain mx-auto" 
-						src="/protest2.jpg" 
+						src="/home.png" 
 						alt="AISC logo"
 					>
 				</div>

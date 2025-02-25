@@ -13,7 +13,23 @@
     ];
 </script>
 
-<div class="fixed left-4 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-50">
+<!-- Desktop social links (fixed on left) -->
+<div class="hidden md:flex fixed left-4 top-1/2 -translate-y-1/2 flex-col gap-4 z-50">
+    {#each socials as social}
+        <a
+            href={social.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-gray-600 hover:text-gray-300 dark:text-gray-400 dark:hover:text-gray-100 transition-colors duration-200"
+            aria-label={social.name}
+        >
+            {@html social.icon}
+        </a>
+    {/each}
+</div>
+
+<!-- Mobile social links (at bottom) -->
+<div class="md:hidden flex justify-center gap-6 py-8 mt-8 border-t border-gray-800">
     {#each socials as social}
         <a
             href={social.url}

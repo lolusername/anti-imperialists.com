@@ -5,9 +5,6 @@
 
 <main class="relative bg-black text-white min-h-screen pt-36">
     <div class="container mx-auto px-4 max-w-6xl">
-        <div class="flex justify-center">
-            <img src="/logo.jpeg" alt="AISC logo" class="transition-all duration-300 rounded-full w-60 bg-white h-60 object-contain shadow-[0_0_2rem_1.5rem_#FF6347]">
-        </div>
         <h1 class="mt-12 font-hero text-4xl md:text-5xl text-center lg:text-5xl text-[#2E8B57]">Our Community</h1>
         <div class="text-lg md:text-xl mb-12">
             <span class="italic">Our Community</span> is a network of organizations and collectives that share our commitment to anti-imperialism and liberation for all peoples.
@@ -25,14 +22,14 @@
                                     class="max-h-full w-auto object-contain"
                                 />
                             </div>
+                            <h2 class="font-hero text-xl font-semibold mt-4 text-[#2E8B57]">{logo.title}</h2>
                         {:else}
                             <div class="h-48 flex items-center justify-center">
-                                <p class="text-center font-hero text-xl text-[#2E8B57]">
+                                <h2 class="text-center font-hero text-xl text-[#2E8B57]">
                                     {logo.title}
-                                </p>
+                                </h2>
                             </div>
                         {/if}
-                        <h2 class="font-hero text-xl font-semibold mt-4 text-[#2E8B57]">{logo.title}</h2>
                     </article>
                 {/each}
             </div>
