@@ -3,7 +3,7 @@
     const { logos } = data;
 </script>
 
-<main class="relative bg-black text-white min-h-screen pt-36">
+<main class="relative bg-black text-white min-h-screen pt-6">
     <div class="container mx-auto px-4 max-w-6xl">
         <h1 class="mt-12 font-hero text-4xl md:text-5xl text-center lg:text-5xl text-[#2E8B57]">Our Community</h1>
         <div class="text-lg md:text-xl mb-12">

@@ -55,7 +55,7 @@
         href="/community" 
         class="block text-center py-3 px-1 {$page.url.pathname === '/community/' ? 'text-[#FF6347]' : ''} active:text-[#FF6347]"
       >
-        <span class="text-xs font-medium">COM</span>
+        <span class="text-xs font-medium">COMMUNITY</span>
       </a>
     </li>
     <li class="flex-1">
