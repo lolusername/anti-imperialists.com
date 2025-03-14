@@ -2,15 +2,19 @@ import { client } from '$lib/sanity'
 
 export async function load() {
   try {
-    const blogs = await client.fetch(`
-      *[_type == "blog"] {
-        title,
-        slug,
-        "preview": body[0].children[0].text,
-        "author": author->name,
-        publishedAt
-      } | order(coalesce(author, ''))
-    `)
+    const [blogs, editorialStatement, submissionInstructions] = await Promise.all([
+      client.fetch(`
+        *[_type == "blog"] {
+          title,
+          slug,
+          "preview": body[0].children[0].text,
+          "author": author->name,
+          publishedAt
+        } | order(coalesce(author, ''))
+      `),
+      client.fetch(`*[_type == "editorialStatement"][0].content`),
+      client.fetch(`*[_type == "submissionInstructions"][0].content`)
+    ]);
 
     // Sort by last name in JavaScript as fallback
     const sortedBlogs = blogs.sort((a, b) => {
@@ -21,12 +25,16 @@ export async function load() {
     });
 
     return {
-      blogs: sortedBlogs
+      blogs: sortedBlogs,
+      editorialStatement,
+      submissionInstructions
     }
   } catch (err) {
-    console.error('Error fetching blogs:', err);
+    console.error('Error fetching data:', err);
     return {
-      blogs: []
+      blogs: [],
+      editorialStatement: null,
+      submissionInstructions: null
     }
   }
 } 

@@ -10,7 +10,6 @@
       <li><a href="/members" class="hover:text-[#FF6347] transition-colors duration-300 {$page.url.pathname === '/members/' ? 'italic' : ''}">MEMBERS</a></li>
       <li><a href="/points-of-unity" class="hover:text-[#FF6347] transition-colors duration-300 {$page.url.pathname === '/points-of-unity/' ? 'italic' : ''}">POINTS OF UNITY</a></li>
       <li><a href="/community" class="hover:text-[#FF6347] transition-colors duration-300 {$page.url.pathname === '/community/' ? 'italic' : ''}">COMMUNITY</a></li>
-      <li><a href="/photos" class="hover:text-[#FF6347] transition-colors duration-300 {$page.url.pathname === '/photos/' ? 'italic' : ''}">PHOTOS</a></li>
     </ul>
   </div>
 </nav>
@@ -56,14 +55,6 @@
         class="block text-center py-3 px-1 {$page.url.pathname === '/community/' ? 'text-[#FF6347]' : ''} active:text-[#FF6347]"
       >
         <span class="text-xs font-medium">COMMUNITY</span>
-      </a>
-    </li>
-    <li class="flex-1">
-      <a 
-        href="/photos" 
-        class="block text-center py-3 px-1 {$page.url.pathname === '/photos/' ? 'text-[#FF6347]' : ''} active:text-[#FF6347]"
-      >
-        <span class="text-xs font-medium">PHOTOS</span>
       </a>
     </li>
   </ul>

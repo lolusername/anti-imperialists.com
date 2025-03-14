@@ -99,7 +99,7 @@ export const blog = defineType({
     }),
     defineField({
       name: 'featured',
-      title: 'Featured',
+      title: 'Original Post',
       type: 'boolean',
     }),
     defineField({

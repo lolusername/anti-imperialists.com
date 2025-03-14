@@ -1,4 +1,4 @@
-import { AsteriskIcon } from '@sanity/icons'
+import { AsteriskIcon, DocumentTextIcon, EditIcon } from '@sanity/icons'
 
 export const structure = (S) =>
     S.list()
@@ -15,8 +15,30 @@ export const structure = (S) =>
                         .schemaType('pointsOfUnity')
                         .documentId('pointsOfUnity')
                 ),
-            // Filter out pointsOfUnity from other document types
+            // Submission Instructions Singleton
+            S.listItem()
+                .title('Submission Instructions')
+                .id('submissionInstructions')
+                .icon(DocumentTextIcon)
+                .child(
+                    S.editor()
+                        .id('submissionInstructions')
+                        .schemaType('submissionInstructions')
+                        .documentId('submissionInstructions')
+                ),
+            // Editorial Statement Singleton
+            S.listItem()
+                .title('Editorial Statement')
+                .id('editorialStatement')
+                .icon(EditIcon)
+                .child(
+                    S.editor()
+                        .id('editorialStatement')
+                        .schemaType('editorialStatement')
+                        .documentId('editorialStatement')
+                ),
+            // Filter out singletons from other document types
             ...S.documentTypeListItems().filter(
-                (listItem) => !['pointsOfUnity'].includes(listItem.getId())
+                (listItem) => !['pointsOfUnity', 'submissionInstructions', 'editorialStatement'].includes(listItem.getId())
             )
         ])

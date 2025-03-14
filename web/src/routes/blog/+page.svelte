@@ -2,7 +2,7 @@
 	import { PortableText } from '@portabletext/svelte';
 	import Image from '$lib/components/Image.svelte';
 	export let data;
-	const { blogs } = data;
+	const { blogs, editorialStatement, submissionInstructions } = data;
 
 	// Format date to be more readable
 	function formatDate(dateString) {
@@ -43,32 +43,49 @@
 			</div>
 		</header>
 
-		<!-- Blog posts grid -->
-		<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-			{#each blogs as post}
-				<article class="bg-black border-2 border-[#2E8B57] p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
-					{#if post.body}
-						<div class="prose text-white max-w-none mb-4">
-							<PortableText 
-								value={post.body} 
-								{components}
-							/>
+		<div class="flex flex-col lg:flex-row gap-8">
+			<!-- Left Column: Editorial Statement and Submission Instructions -->
+			<div class="lg:w-[40%] space-y-8">
+				{#if editorialStatement}
+					<div class="bg-black border-2 border-[#2E8B57] p-6">
+						<h2 class="font-hero text-2xl text-[#2E8B57] mb-4">Editorial Statement</h2>
+						<div class="prose text-white max-w-none">
+							<PortableText value={editorialStatement} {components} />
 						</div>
-					{/if}
-					<h2 class="font-hero text-xl font-semibold mb-3">{post.title}</h2>
-					<div class="flex justify-between items-center gap-4 mt-4">
-						{#if post.author}
-							<p class="text-sm text-gray-400">By {post.author}</p>
-						{/if}
 					</div>
-					<a 
-						href="/blog/{post.slug.current}" 
-						class="inline-block mt-4 text-[#2E8B57] hover:text-[#FF6347] font-bold uppercase tracking-wider transition-colors duration-300"
-					>
-						Read more →
-					</a>
-				</article>
-			{/each}
+				{/if}
+
+				{#if submissionInstructions}
+					<div class="bg-black border-2 border-[#2E8B57] p-6 mt-8">
+						<h2 class="font-hero text-2xl text-[#2E8B57] mb-4">Submission Instructions</h2>
+						<div class="prose text-white max-w-none">
+							<PortableText value={submissionInstructions} {components} />
+						</div>
+					</div>
+				{/if}
+			</div>
+
+			<!-- Right Column: Blog Posts Grid -->
+			<div class="lg:w-[60%]">
+				<div class="grid md:grid-cols-2 gap-8">
+					{#each blogs as post}
+						<article class="bg-black border-2 border-[#2E8B57] p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-lg min-h-[200px] flex flex-col justify-between">
+							<div>
+								<h2 class="font-hero text-xl font-semibold mb-3">{post.title}</h2>
+								{#if post.author}
+									<p class="text-sm text-gray-400">By {post.author}</p>
+								{/if}
+							</div>
+							<a 
+								href="/blog/{post.slug.current}" 
+								class="inline-block mt-4 text-[#2E8B57] hover:text-[#FF6347] font-bold uppercase tracking-wider transition-colors duration-300"
+							>
+								Read more →
+							</a>
+						</article>
+					{/each}
+				</div>
+			</div>
 		</div>
 	</div>
 </main>

@@ -39,5 +39,11 @@ export const memberBio = defineType({
       type: 'array',
       of: [{type: 'block'}],
     }),
+    defineField({
+      name:'editorialBoardMember',
+      title: 'Editorial Board Member',
+      type: 'boolean',
+      initialValue: true,
+    }),
   ],
 })

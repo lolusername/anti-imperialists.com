@@ -6,7 +6,7 @@
 
 <main class="bg-black text-white min-h-screen">
 	<div class="container mx-auto px-4 max-w-6xl pt-24 text-md md:text-xl lg:text-2xl">
-		<h1 class="font-hero text-5xl font-bold mb-12 text-center text-[#2E8B57]">Points of Unity</h1>
+		<h1 class="font-hero text-6xl font-bold mb-12 text-center text-[#2E8B57]">Points of Unity</h1>
 		
 		{#if data.pointsOfUnity && data.pointsOfUnity.content}
 			<div class="prose-sm md:prose-xl prose-invert max-w-none">

@@ -4,6 +4,8 @@ import {communityLogo} from './documents/communityLogo'
 import {memberBio} from './documents/memberBio'
 import {imageBlock} from './objects/imageBlock'
 import {photos} from './documents/photos'
+import {submissionInstructions} from './documents/submissionInstructions'
+import {editorialStatement} from './documents/editorialStatement'
 // Import your other schemas here
 // import posts from './documents/posts'
 // import authors from './documents/authors'
@@ -15,7 +17,9 @@ export const schemaTypes = [
   communityLogo,
   memberBio,
   imageBlock,
-  photos
+  photos,
+  submissionInstructions,
+  editorialStatement
   // Add your other schemas here
   // posts,
   // authors,
