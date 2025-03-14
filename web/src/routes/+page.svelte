@@ -11,7 +11,7 @@
 			<article class="pt-8 md:pt-12 -mb-9">
 				<article class="font-hero text-4xl md:text-5xl lg:text-6xl font-extrabold 2xl:text-7xl text-center">
 					<div class="flex justify-center">
-						<img src="/logo.jpeg" alt="AISC logo" class="transition-all z-40 duration-300 rounded-full w-48 sm:w-60 md:w-96 bg-white h-48 sm:h-60 md:h-96 object-contain shadow-[0_0_2rem_1.5rem_#2E8B57]">
+						<img src="/logo.jpeg" alt="AISC logo" class="transition-all z-40 duration-300 rounded-full w-48 sm:w-60 md:w-80 bg-white h-48 sm:h-60 md:h-80 object-contain shadow-[0_0_2rem_1.5rem_#2E8B57]">
 					</div>
 				</article>
 			</article>

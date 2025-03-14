@@ -9,11 +9,6 @@ export const pointsOfUnity = defineType({
   __experimental_actions: ['update', 'publish'],
   fields: [
     defineField({
-      name: 'title',
-      title: 'Title',
-      type: 'string',
-    }),
-    defineField({
       name: 'content',
       title: 'Content',
       type: 'array',
