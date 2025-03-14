@@ -1,6 +1,7 @@
 <script>
 	import { PortableText } from '@portabletext/svelte';
 	import Image from '$lib/components/Image.svelte';
+	import { onMount } from 'svelte';
 	export let data;
 	const { volumes, editorialStatement, submissionInstructions } = data;
 
@@ -19,16 +20,18 @@
 		}
 	};
 
-	// Track which volumes are expanded
-	let expandedVolumes = new Set([volumes?.[0]?._id]); // Start with first volume expanded
+	let expandedIds = [];
+
+	onMount(() => {
+		if (volumes?.[0]?._id) {
+			expandedIds = [volumes[0]._id];
+		}
+	});
 
 	function toggleVolume(volumeId) {
-		if (expandedVolumes.has(volumeId)) {
-			expandedVolumes.delete(volumeId);
-		} else {
-			expandedVolumes.add(volumeId);
-		}
-		expandedVolumes = expandedVolumes; // Trigger reactivity
+		expandedIds = expandedIds.includes(volumeId) 
+			? expandedIds.filter(id => id !== volumeId)
+			: [...expandedIds, volumeId];
 	}
 </script>
 
@@ -87,12 +90,12 @@
 								on:click={() => toggleVolume(volume._id)}
 							>
 								<h2 class="font-hero text-2xl">Volume {volume.number}: {volume.title}</h2>
-								<span class="text-2xl transform transition-transform duration-300" class:rotate-180={expandedVolumes.has(volume._id)}>
+								<span class="text-2xl transform transition-transform duration-300" class:rotate-180={expandedIds.includes(volume._id)}>
 									↓
 								</span>
 							</button>
 							
-							{#if expandedVolumes.has(volume._id)}
+							{#if expandedIds.includes(volume._id)}
 								<div class="grid md:grid-cols-2 gap-8 mt-8">
 									{#each volume.posts as post}
 										<article class="bg-black border-2 border-[#2E8B57] p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-lg min-h-[200px] flex flex-col justify-between">
