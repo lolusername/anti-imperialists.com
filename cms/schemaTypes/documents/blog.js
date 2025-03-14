@@ -14,6 +14,13 @@ export const blog = defineType({
       validation: Rule => Rule.required(),
     }),
     defineField({
+      name: 'volume',
+      title: 'Volume',
+      type: 'reference',
+      to: [{type: 'volume'}],
+      validation: Rule => Rule.required(),
+    }),
+    defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
@@ -112,11 +119,15 @@ export const blog = defineType({
     select: {
       title: 'title',
       author: 'author.name',
+      volume: 'volume.number',
       media: 'mainImage'
     },
     prepare(selection) {
-      const {author} = selection
-      return {...selection, subtitle: author && `by ${author}`}
+      const {author, volume} = selection
+      return {
+        ...selection,
+        subtitle: `${volume ? `Volume ${volume} - ` : ''}${author ? `by ${author}` : ''}`
+      }
     }
   }
 }) 

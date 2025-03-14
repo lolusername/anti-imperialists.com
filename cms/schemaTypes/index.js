@@ -6,6 +6,7 @@ import {imageBlock} from './objects/imageBlock'
 import {photos} from './documents/photos'
 import {submissionInstructions} from './documents/submissionInstructions'
 import {editorialStatement} from './documents/editorialStatement'
+import {volume} from './documents/volume'
 // Import your other schemas here
 // import posts from './documents/posts'
 // import authors from './documents/authors'
@@ -19,7 +20,8 @@ export const schemaTypes = [
   imageBlock,
   photos,
   submissionInstructions,
-  editorialStatement
+  editorialStatement,
+  volume
   // Add your other schemas here
   // posts,
   // authors,

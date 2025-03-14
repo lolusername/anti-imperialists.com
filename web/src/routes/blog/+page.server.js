@@ -2,37 +2,35 @@ import { client } from '$lib/sanity'
 
 export async function load() {
   try {
-    const [blogs, editorialStatement, submissionInstructions] = await Promise.all([
+    const [volumes, editorialStatement, submissionInstructions] = await Promise.all([
       client.fetch(`
-        *[_type == "blog"] {
+        *[_type == "volume"] | order(number asc) {
+          _id,
+          number,
           title,
-          slug,
-          "preview": body[0].children[0].text,
-          "author": author->name,
-          publishedAt
-        } | order(coalesce(author, ''))
+          description,
+          "posts": *[_type == "blog" && references(^._id)] {
+            title,
+            slug,
+            "preview": body[0].children[0].text,
+            "author": author->name,
+            publishedAt
+          } | order(publishedAt desc)
+        }
       `),
       client.fetch(`*[_type == "editorialStatement"][0].content`),
       client.fetch(`*[_type == "submissionInstructions"][0].content`)
     ]);
 
-    // Sort by last name in JavaScript as fallback
-    const sortedBlogs = blogs.sort((a, b) => {
-      if (!a.author || !b.author) return 0;
-      const lastNameA = a.author.split(' ')[1]?.toLowerCase() || a.author.toLowerCase();
-      const lastNameB = b.author.split(' ')[1]?.toLowerCase() || b.author.toLowerCase();
-      return lastNameA.localeCompare(lastNameB);
-    });
-
     return {
-      blogs: sortedBlogs,
+      volumes,
       editorialStatement,
       submissionInstructions
     }
   } catch (err) {
     console.error('Error fetching data:', err);
     return {
-      blogs: [],
+      volumes: [],
       editorialStatement: null,
       submissionInstructions: null
     }

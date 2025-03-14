@@ -2,7 +2,7 @@
 	import { PortableText } from '@portabletext/svelte';
 	import Image from '$lib/components/Image.svelte';
 	export let data;
-	const { blogs, editorialStatement, submissionInstructions } = data;
+	const { volumes, editorialStatement, submissionInstructions } = data;
 
 	// Format date to be more readable
 	function formatDate(dateString) {
@@ -18,6 +18,18 @@
 			image: Image
 		}
 	};
+
+	// Track which volumes are expanded
+	let expandedVolumes = new Set([volumes?.[0]?._id]); // Start with first volume expanded
+
+	function toggleVolume(volumeId) {
+		if (expandedVolumes.has(volumeId)) {
+			expandedVolumes.delete(volumeId);
+		} else {
+			expandedVolumes.add(volumeId);
+		}
+		expandedVolumes = expandedVolumes; // Trigger reactivity
+	}
 </script>
 
 <main class="relative bg-black text-white min-h-screen pt-12">
@@ -67,24 +79,44 @@
 
 			<!-- Right Column: Blog Posts Grid -->
 			<div class="lg:w-[60%]">
-				<div class="grid md:grid-cols-2 gap-8">
-					{#each blogs as post}
-						<article class="bg-black border-2 border-[#2E8B57] p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-lg min-h-[200px] flex flex-col justify-between">
-							<div>
-								<h2 class="font-hero text-xl font-semibold mb-3">{post.title}</h2>
-								{#if post.author}
-									<p class="text-sm text-gray-400">By {post.author}</p>
-								{/if}
-							</div>
-							<a 
-								href="/blog/{post.slug.current}" 
-								class="inline-block mt-4 text-[#2E8B57] hover:text-[#FF6347] font-bold uppercase tracking-wider transition-colors duration-300"
+				{#if volumes && volumes.length > 0}
+					{#each volumes as volume}
+						<div class="mb-8">
+							<button
+								class="w-full bg-black border-2 border-[#2E8B57] p-4 flex justify-between items-center text-left hover:bg-[#2E8B57] hover:text-black transition-colors duration-300"
+								on:click={() => toggleVolume(volume._id)}
 							>
-								Read more →
-							</a>
-						</article>
+								<h2 class="font-hero text-2xl">Volume {volume.number}: {volume.title}</h2>
+								<span class="text-2xl transform transition-transform duration-300" class:rotate-180={expandedVolumes.has(volume._id)}>
+									↓
+								</span>
+							</button>
+							
+							{#if expandedVolumes.has(volume._id)}
+								<div class="grid md:grid-cols-2 gap-8 mt-8">
+									{#each volume.posts as post}
+										<article class="bg-black border-2 border-[#2E8B57] p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-lg min-h-[200px] flex flex-col justify-between">
+											<div>
+												<h3 class="font-hero text-xl font-semibold mb-3">{post.title}</h3>
+												{#if post.author}
+													<p class="text-sm text-gray-400">By {post.author}</p>
+												{/if}
+											</div>
+											<a 
+												href="/blog/{post.slug.current}" 
+												class="inline-block mt-4 text-[#2E8B57] hover:text-[#FF6347] font-bold uppercase tracking-wider transition-colors duration-300"
+											>
+												Read more →
+											</a>
+										</article>
+									{/each}
+								</div>
+							{/if}
+						</div>
 					{/each}
-				</div>
+				{:else}
+					<p class="text-center text-gray-400 text-xl">No volumes available.</p>
+				{/if}
 			</div>
 		</div>
 	</div>
