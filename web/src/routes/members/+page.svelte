@@ -4,7 +4,7 @@
 </script>
 
 <div class="container mx-auto px-4 max-w-6xl mt-24">
-    <h1 class="font-hero text-5xl font-bold mb-12 text-center text-[#2E8B57]">Editorial Board Members</h1>
+    <h1 class="font-hero text-6xl font-bold mb-12 text-center text-[#2E8B57]">Editorial Board Members</h1>
     
     {#if members && members.length > 0}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

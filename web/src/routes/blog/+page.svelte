@@ -49,10 +49,10 @@
 				</div>
 			</div>
 			<div class="text-left md:max-w-2xl">
-				<h1 class="text-left font-hero text-4xl md:text-6xl text-[#2E8B57] tracking-tight leading-none mb-6">
+				<h1 class="text-left font-hero text-4xl md:text-6xl text-[#2E8B57] tracking-tight leading-none mb-6 mt-12">
 					The Pen is My Machete
 				</h1>
-				<div class="text-md text-white">
+				<div class="text-lg text-white">
 					<span class="italic">The Pen is My Machete Blog</span> is a monthly, online publication associated with the Anti-Imperialist Scholars Collective. Liberation and justice are our core values. We understand US-led imperialism as the primary contradiction that works against the realization of liberation and justice for all in the world system. Just as the root causes of our exploitation, oppression and dispossession are connected through the capitalist-imperialist system, so too are our struggles to emancipate ourselves from this system. "Nobody's free till everyone is free," as Fannie Lou Hamer remarked in 1971. We seek to engage in collaborative knowledge production that aims to elucidate how US-led imperialism works and operates in the past and present–and how different popular struggles challenge this violent system of domination while offering revolutionary alternatives. The Machete Blog is committed to platforming voices that both nurture comprehensive and critical analysis of our current time of monsters, and invite us to imagine new revolutionary horizons.
 				</div>
 			</div>
@@ -86,10 +86,10 @@
 					{#each volumes as volume}
 						<div class="mb-8">
 							<button
-								class="w-full bg-black border-2 border-[#2E8B57] p-4 flex justify-between items-center text-left hover:bg-[#2E8B57] hover:text-black transition-colors duration-300"
+								class="w-full bg-black border-2 border-[#FF6347] p-4 flex justify-between items-center text-left hover:bg-[#FF6347] hover:text-black transition-colors duration-300"
 								on:click={() => toggleVolume(volume._id)}
 							>
-								<h2 class="font-hero text-2xl">Volume {volume.number}: {volume.title}</h2>
+								<h2 class="font-hero text-2xl uppercase">Volume {volume.number}: {volume.title}</h2>
 								<span class="text-2xl transform transition-transform duration-300" class:rotate-180={expandedIds.includes(volume._id)}>
 									↓
 								</span>

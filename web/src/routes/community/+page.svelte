@@ -25,7 +25,7 @@
                             <h2 class="font-hero text-xl font-semibold mt-4 text-[#2E8B57]">{logo.title}</h2>
                         {:else}
                             <div class="h-48 flex items-center justify-center">
-                                <h2 class="text-center font-hero text-xl text-[#2E8B57] px-4">
+                                <h2 class="text-center font-hero text-xl text-[#2E8B57] px-4 relative top-12">
                                     {logo.title}
                                 </h2>
                             </div>
