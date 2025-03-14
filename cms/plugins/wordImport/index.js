@@ -7,7 +7,7 @@ export const wordImportTool = definePlugin({
   tools: [
     {
       name: 'word-import',
-      title: 'Import Word Doc',
+      title: 'Import Blog Post from Word Document',
       icon: DocumentIcon,
       component: WordImportTool
     }

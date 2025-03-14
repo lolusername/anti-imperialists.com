@@ -3,7 +3,7 @@ import {UsersIcon} from '@sanity/icons'
 
 export const memberBio = defineType({
   name: 'memberBio',
-  title: 'Member Bio',
+  title: 'Authors and Members of the Editorial Board',
   type: 'document',
   icon: UsersIcon,
   fields: [

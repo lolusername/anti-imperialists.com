@@ -38,6 +38,8 @@ export default function WordImportTool() {
         convertFootnotes: "extract"
       })
 
+      console.log('Mammoth conversion result:', result.value)
+
       // Convert main content to blocks
       const blocks = []
       const parser = new DOMParser()
@@ -47,13 +49,16 @@ export default function WordImportTool() {
       const elements = Array.from(doc.body.children)
       for (const element of elements) {
         // Skip truly empty elements (no text content at all)
-        if (!element.textContent) continue
+        if (!element.textContent.trim()) continue
 
-        // Log element details for debugging
-        console.log('Element type:', element.tagName.toLowerCase())
-        console.log('Element classes:', element.className)
-        console.log('Element content:', element.textContent)
-        console.log('------------------------')
+        // Log any links found in this element
+        const links = element.getElementsByTagName('a')
+        if (links.length > 0) {
+          console.log('Found links in element:', Array.from(links).map(link => ({
+            text: link.textContent,
+            href: link.getAttribute('href')
+          })))
+        }
 
         // Determine the style based on element type
         let style = 'normal'
@@ -79,41 +84,96 @@ export default function WordImportTool() {
                   }]
                 })
               }
-              console.log(blocks)
             })
-            continue // Skip the rest of the loop for footnotes
+            continue
           }
         }
 
-        // Only process non-footnote content
-        if (element.tagName.toLowerCase() !== 'ol') {
-          // Process text content
-          const text = element.textContent.trim()
-          const children = []
-          let currentText = text
+        // Process text content with links
+        const children = []
+        let currentNode = element.firstChild
+        let lastNodeWasText = false
 
-          // Add remaining text if any
-          if (currentText) {
+        const addTextNode = (text) => {
+          // Only trim start of first text node and end of last text node
+          if (text && text.length > 0) {
             children.push({
               _type: 'span',
               _key: nanoid(),
-              text: currentText
+              text: text
             })
+          }
+        }
+
+        while (currentNode) {
+          if (currentNode.nodeType === Node.TEXT_NODE) {
+            // Handle plain text while preserving spaces
+            const text = currentNode.textContent
+            if (text) {
+              addTextNode(text)
+              lastNodeWasText = true
+            }
+          } else if (currentNode.nodeType === Node.ELEMENT_NODE) {
+            if (currentNode.tagName.toLowerCase() === 'a') {
+              // Handle hyperlinks
+              const text = currentNode.textContent
+              const href = currentNode.getAttribute('href')
+              console.log('Processing link:', { text, href })
+              if (text && href) {
+                const markDefKey = nanoid()
+                const linkSpan = {
+                  _type: 'span',
+                  _key: nanoid(),
+                  text: text,
+                  marks: [markDefKey]
+                }
+                children.push(linkSpan)
+                // Store markDef separately to add to block later
+                if (!element._markDefs) {
+                  element._markDefs = []
+                }
+                element._markDefs.push({
+                  _key: markDefKey,
+                  _type: 'link',
+                  href: href
+                })
+              }
+              lastNodeWasText = false
+            } else {
+              // Handle other elements
+              const text = currentNode.textContent
+              if (text) {
+                addTextNode(text)
+                lastNodeWasText = true
+              }
+            }
+          }
+          currentNode = currentNode.nextSibling
+        }
+
+        // Create block with processed children
+        if (children.length > 0) {
+          // Trim the first and last text nodes while preserving internal spacing
+          if (children.length > 0) {
+            const firstChild = children[0]
+            const lastChild = children[children.length - 1]
+            if (firstChild._type === 'span' && !firstChild.marks) {
+              firstChild.text = firstChild.text.trimStart()
+            }
+            if (lastChild._type === 'span' && !lastChild.marks) {
+              lastChild.text = lastChild.text.trimEnd()
+            }
           }
 
-          // Create block with processed children
-          if (children.length > 0 || text) {
-            blocks.push({
-              _type: 'block',
-              _key: nanoid(),
-              style: style,
-              children: children.length > 0 ? children : [{
-                _type: 'span',
-                _key: nanoid(),
-                text: text
-              }]
-            })
+          const block = {
+            _type: 'block',
+            _key: nanoid(),
+            style: style,
+            children: children,
+            markDefs: element._markDefs || []
           }
+          console.log('Created block with links:', block)
+          blocks.push(block)
         }
       }
 
@@ -151,7 +211,6 @@ export default function WordImportTool() {
           body: blocks
         })
       }
-      console.log(blocks)
       
       // Navigate to the document using the correct path format
       router.navigateIntent('edit', {
