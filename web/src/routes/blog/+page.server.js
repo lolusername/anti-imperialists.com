@@ -1,7 +1,10 @@
 import { client } from '$lib/sanity'
+import { error } from '@sveltejs/kit'
 
 export async function load() {
   try {
+    console.log('Fetching blog data...')
+    
     const [volumes, editorialStatement, submissionInstructions] = await Promise.all([
       client.fetch(`
         *[_type == "volume"] | order(number asc) {
@@ -10,17 +13,28 @@ export async function load() {
           title,
           description,
           "posts": *[_type == "blog" && references(^._id)] {
+            _id,
             title,
-            slug,
-            "preview": body[0].children[0].text,
+            "slug": slug.current,
             "author": author->name,
-            publishedAt
+            "featured": coalesce(featured, false),
+            publishedAt,
+            mainImage{
+              alt,
+              asset->
+            }
           } | order(publishedAt desc)
         }
       `),
       client.fetch(`*[_type == "editorialStatement"][0].content`),
       client.fetch(`*[_type == "submissionInstructions"][0].content`)
     ]);
+
+    console.log('Volumes data:', volumes)
+
+    if (!volumes) {
+      throw error(500, 'Failed to load volumes')
+    }
 
     return {
       volumes,
@@ -29,10 +43,9 @@ export async function load() {
     }
   } catch (err) {
     console.error('Error fetching data:', err);
-    return {
-      volumes: [],
-      editorialStatement: null,
-      submissionInstructions: null
-    }
+    throw error(500, {
+      message: 'Error loading blog data',
+      details: err.message
+    })
   }
 } 

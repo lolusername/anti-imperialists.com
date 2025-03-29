@@ -21,4 +21,10 @@ export async function load({ params }) {
     return {
         member
     }
+}
+
+// This function tells SvelteKit which slugs to prerender
+export const entries = async () => {
+    const members = await client.fetch(`*[_type == "memberBio"]{ "slug": slug.current }`)
+    return members.map(member => ({ slug: member.slug }))
 } 

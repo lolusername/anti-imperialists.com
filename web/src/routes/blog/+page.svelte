@@ -1,6 +1,8 @@
 <script>
 	import { PortableText } from '@portabletext/svelte';
 	import Image from '$lib/components/Image.svelte';
+	import Block from '$lib/components/Block.svelte';
+	import ListItem from '$lib/components/ListItem.svelte';
 	import { onMount } from 'svelte';
 	export let data;
 	const { volumes, editorialStatement, submissionInstructions } = data;
@@ -16,7 +18,12 @@
 
 	const components = {
 		types: {
-			image: Image
+			image: Image,
+			block: Block
+		},
+		listItem: ({ children, node }) => {
+			const style = node?.listItem === 'bullet' ? 'list-disc' : node?.listItem === 'number' ? 'list-decimal' : '';
+			return `<li class="text-white ${style} ml-4">${children}</li>`;
 		}
 	};
 
@@ -27,6 +34,26 @@
 			expandedIds = [volumes[0]._id];
 		}
 	});
+
+	function sortPosts(posts) {
+		return [...posts].sort((a, b) => {
+			// First sort by featured status - featured posts come first
+			if (a.featured !== b.featured) {
+				return a.featured ? -1 : 1;
+			}
+			
+			// Then sort by author last name
+			const getLastName = (post) => {
+				if (!post.author) return '';
+				const nameParts = post.author.split(' ');
+				return nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
+			};
+			
+			const lastNameA = getLastName(a);
+			const lastNameB = getLastName(b);
+			return lastNameA.localeCompare(lastNameB);
+		});
+	}
 
 	function toggleVolume(volumeId) {
 		expandedIds = expandedIds.includes(volumeId) 
@@ -52,9 +79,7 @@
 				<h1 class="text-left font-hero text-4xl md:text-6xl text-[#2E8B57] tracking-tight leading-none mb-6 mt-12">
 					The Pen is My Machete
 				</h1>
-				<div class="text-lg text-white">
-					<span class="italic">The Pen is My Machete Blog</span> is a monthly, online publication associated with the Anti-Imperialist Scholars Collective. Liberation and justice are our core values. We understand US-led imperialism as the primary contradiction that works against the realization of liberation and justice for all in the world system. Just as the root causes of our exploitation, oppression and dispossession are connected through the capitalist-imperialist system, so too are our struggles to emancipate ourselves from this system. "Nobody's free till everyone is free," as Fannie Lou Hamer remarked in 1971. We seek to engage in collaborative knowledge production that aims to elucidate how US-led imperialism works and operates in the past and present–and how different popular struggles challenge this violent system of domination while offering revolutionary alternatives. The Machete Blog is committed to platforming voices that both nurture comprehensive and critical analysis of our current time of monsters, and invite us to imagine new revolutionary horizons.
-				</div>
+		
 			</div>
 		</header>
 
@@ -89,7 +114,7 @@
 								class="w-full bg-black border-2 border-[#FF6347] p-4 flex justify-between items-center text-left hover:bg-[#FF6347] hover:text-black transition-colors duration-300"
 								on:click={() => toggleVolume(volume._id)}
 							>
-								<h2 class="font-hero text-2xl uppercase">Volume {volume.number}: {volume.title}</h2>
+								<h2 class="font-hero text-2xl uppercase">{`${volume.title} ${volume.number}`}</h2>
 								<span class="text-2xl transform transition-transform duration-300" class:rotate-180={expandedIds.includes(volume._id)}>
 									↓
 								</span>
@@ -97,16 +122,19 @@
 							
 							{#if expandedIds.includes(volume._id)}
 								<div class="grid md:grid-cols-2 gap-8 mt-8">
-									{#each volume.posts as post}
+									{#each sortPosts(volume.posts) as post}
 										<article class="bg-black border-2 border-[#2E8B57] p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-lg min-h-[200px] flex flex-col justify-between">
 											<div>
 												<h3 class="font-hero text-xl font-semibold mb-3">{post.title}</h3>
+												{#if post.featured}
+													<span class="inline-block bg-[#FF6347] text-black text-xs font-bold px-2 py-1 rounded-sm uppercase tracking-wider mb-2">Original Content</span>
+												{/if}
 												{#if post.author}
 													<p class="text-sm text-gray-400">By {post.author}</p>
 												{/if}
 											</div>
 											<a 
-												href="/blog/{post.slug.current}" 
+												href="/blog/{post.slug}" 
 												class="inline-block mt-4 text-[#2E8B57] hover:text-[#FF6347] font-bold uppercase tracking-wider transition-colors duration-300"
 											>
 												Read more →
@@ -125,7 +153,7 @@
 	</div>
 </main>
 
-<style>
+<style> 
 	.glow {
 		box-shadow: 0 0 40px rgba(255, 99, 71, 0.3);
 	}
