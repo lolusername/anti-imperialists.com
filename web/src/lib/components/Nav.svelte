@@ -8,7 +8,7 @@
       <li><a href="/" class="hover:text-[#FF6347] transition-colors duration-300 {$page.url.pathname === '/' ? 'italic' : ''}">ABOUT</a></li>
       <li><a href="/blog" class="hover:text-[#FF6347] transition-colors duration-300 {$page.url.pathname === '/blog/' ? 'italic' : ''}">BLOG</a></li>
       <li><a href="/members" class="hover:text-[#FF6347] transition-colors duration-300 {$page.url.pathname === '/members/' ? 'italic' : ''}">MEMBERS</a></li>
-      <li><a href="/points-of-unity" class="hover:text-[#FF6347] transition-colors duration-300 {$page.url.pathname === '/points-of-unity/' ? 'italic' : ''}">POINTS OF UNITY</a></li>
+      <li><a href="/points-of-unity" class="hover:text-[#FF6347] transition-colors duration-300 {$page.url.pathname === '/points-of-unity/' ? 'italic' : ''}">PRINCIPLES OF UNITY</a></li>
       <li><a href="/community" class="hover:text-[#FF6347] transition-colors duration-300 {$page.url.pathname === '/community/' ? 'italic' : ''}">COMMUNITY</a></li>
     </ul>
   </div>

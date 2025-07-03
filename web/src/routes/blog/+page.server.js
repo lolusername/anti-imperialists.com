@@ -5,7 +5,7 @@ export async function load() {
   try {
     console.log('Fetching blog data...')
     
-    const [volumes, editorialStatement, submissionInstructions] = await Promise.all([
+    const [volumes, editorialStatement, submissionInstructions, editorialBoard] = await Promise.all([
       client.fetch(`
         *[_type == "volume"] | order(number asc) {
           _id,
@@ -27,7 +27,15 @@ export async function load() {
         }
       `),
       client.fetch(`*[_type == "editorialStatement"][0].content`),
-      client.fetch(`*[_type == "submissionInstructions"][0].content`)
+      client.fetch(`*[_type == "submissionInstructions"][0].content`),
+      client.fetch(`
+        *[_type == "memberBio" && editorialBoardMember == true] | order(name asc) {
+          name,
+          "bio": bio,
+          affiliation,
+          "slug": slug.current
+        }
+      `)
     ]);
 
     console.log('Volumes data:', volumes)
@@ -39,7 +47,8 @@ export async function load() {
     return {
       volumes,
       editorialStatement,
-      submissionInstructions
+      submissionInstructions,
+      editorialBoard
     }
   } catch (err) {
     console.error('Error fetching data:', err);

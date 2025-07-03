@@ -5,7 +5,7 @@
 	import ListItem from '$lib/components/ListItem.svelte';
 	import { onMount } from 'svelte';
 	export let data;
-	const { volumes, editorialStatement, submissionInstructions } = data;
+	const { volumes, editorialStatement, submissionInstructions, editorialBoard } = data;
 
 	// Format date to be more readable
 	function formatDate(dateString) {
@@ -55,6 +55,20 @@
 		});
 	}
 
+	function sortMembers(members) {
+		return [...members].sort((a, b) => {
+			const getLastName = (member) => {
+				if (!member.name) return '';
+				const nameParts = member.name.split(' ');
+				return nameParts.length > 1 ? nameParts[1] : member.name;
+			};
+			
+			const lastNameA = getLastName(a);
+			const lastNameB = getLastName(b);
+			return lastNameA.localeCompare(lastNameB);
+		});
+	}
+
 	function toggleVolume(volumeId) {
 		expandedIds = expandedIds.includes(volumeId) 
 			? expandedIds.filter(id => id !== volumeId)
@@ -83,13 +97,34 @@
 			</div>
 		</header>
 
+		{#if editorialBoard && editorialBoard.length > 0}
+			<div class="text-center mb-12">
+				<h2 class="font-hero text-2xl text-[#2E8B57] mb-4">Editorial Board</h2>
+				<div class="flex flex-wrap justify-center gap-4">
+					{#each sortMembers(editorialBoard) as member}
+						<div class="text-white">
+							<a 
+								href="/members/{member.slug}" 
+								class="font-bold hover:text-[#2E8B57] transition-colors duration-300"
+							>
+								{member.name}
+							</a>
+							{#if member.affiliation}
+								<span class="text-gray-400 ml-2">({member.affiliation})</span>
+							{/if}
+						</div>
+					{/each}
+				</div>
+			</div>
+		{/if}
+
 		<div class="flex flex-col lg:flex-row gap-8">
 			<!-- Left Column: Editorial Statement and Submission Instructions -->
 			<div class="lg:w-[40%] space-y-8">
 				{#if editorialStatement}
 					<div class="bg-black border-2 border-[#2E8B57] p-6">
 						<h2 class="font-hero text-2xl text-[#2E8B57] mb-4">Editorial Statement</h2>
-						<div class="prose text-white max-w-none">
+						<div class="prose prose-sm text-white max-w-none">
 							<PortableText value={editorialStatement} {components} />
 						</div>
 					</div>
@@ -98,7 +133,7 @@
 				{#if submissionInstructions}
 					<div class="bg-black border-2 border-[#2E8B57] p-6 mt-8">
 						<h2 class="font-hero text-2xl text-[#2E8B57] mb-4">Submission Instructions</h2>
-						<div class="prose text-white max-w-none">
+						<div class="prose prose-sm text-white max-w-none">
 							<PortableText value={submissionInstructions} {components} />
 						</div>
 					</div>
@@ -176,5 +211,9 @@
 			opacity: 0.2;
 			transform: scale(1.05);
 		}
+	}
+
+	:global(.prose-sm strong) {
+		color: #2E8B57 !important;
 	}
 </style> 
