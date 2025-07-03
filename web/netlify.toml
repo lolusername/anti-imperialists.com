@@ -1,8 +1,9 @@
-# Updated build configuration - v2
+# Updated build configuration - v3 (force cache clear)
 [build]
   base = "web"
   publish = "build"
-  command = "npm install --legacy-peer-deps && npm run build"
+  command = "rm -rf node_modules .npm && npm cache clean --force && npm install --legacy-peer-deps && npm run build"
 
 [build.environment]
-  NODE_VERSION = "20" 
+  NODE_VERSION = "20"
+  NPM_CONFIG_CACHE = "/tmp/.npm" 
