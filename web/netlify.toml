@@ -1,0 +1,7 @@
+gt[build]
+  base = "web"
+  publish = "web/build"
+  command = "npm install --legacy-peer-deps && npm run build"
+
+[build.environment]
+  NODE_VERSION = "20" 
