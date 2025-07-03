@@ -1,7 +1,7 @@
 [build]
   base = "web"
   publish = "build"
-  command = "npm ci --only=production --legacy-peer-deps && npm run build"
+  command = "npm install --production --legacy-peer-deps --force && npm run build"
 
 [build.environment]
   NODE_VERSION = "20" 
