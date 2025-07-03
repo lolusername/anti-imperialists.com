@@ -1,10 +1,11 @@
-# Disable all caching to fix dependency conflicts
+# Nuclear cache-busting approach
 [build]
   base = "web"
   publish = "build"
-  command = "npm install --legacy-peer-deps --force && npm run build"
+  command = "rm -rf /opt/buildhome/cache && rm -rf node_modules && npm install --legacy-peer-deps --force && npm run build"
 
 [build.environment]
   NODE_VERSION = "22"
-  NPM_CONFIG_CACHE = "/tmp/.npm"
-  NETLIFY_CACHE_SKIP = "true" 
+  NPM_CONFIG_CACHE = "/tmp/.npm-$(date +%s)"
+  NETLIFY_SKIP_CACHE = "true"
+  CI = "true" 
