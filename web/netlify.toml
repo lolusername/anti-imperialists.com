@@ -1,9 +1,10 @@
-# Updated build configuration - v3 (force cache clear)
+# Disable all caching to fix dependency conflicts
 [build]
   base = "web"
   publish = "build"
-  command = "rm -rf node_modules .npm && npm cache clean --force && npm install --legacy-peer-deps && npm run build"
+  command = "npm install --legacy-peer-deps --force && npm run build"
 
 [build.environment]
   NODE_VERSION = "20"
-  NPM_CONFIG_CACHE = "/tmp/.npm" 
+  NPM_CONFIG_CACHE = "/tmp/.npm"
+  NETLIFY_CACHE_SKIP = "true" 
