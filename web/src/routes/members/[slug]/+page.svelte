@@ -4,9 +4,9 @@
     const { member } = data
 </script>
 
-<main class="relative bg-black text-white min-h-screen pt-36">
+<main class="relative bg-white text-black min-h-screen pt-36">
     <div class="container mx-auto px-4 max-w-4xl">
-        <article class="bg-black border-2 border-[#2E8B57] p-8 ">
+        <article class="bg-white border-2 border-[#2E8B57] p-8 shadow-lg">
             <div class="flex flex-col items-center mb-8">
                 {#if member.imageUrl}
                     <img 
@@ -19,15 +19,15 @@
                     {member.name}
                 </h1>
                 {#if member.role}
-                    <p class="text-xl text-gray-400 mb-8">{member.role}</p>
+                    <p class="text-xl text-gray-600 mb-8">{member.role}</p>
                 {/if}
             </div>
 
-            <div class="prose prose-lg prose-invert max-w-none">
+            <div class="prose prose-lg max-w-none">
                 {#if member.bio}
                     <PortableText value={member.bio} />
                 {:else}
-                    <p class="text-gray-400 text-center">No biography available.</p>
+                    <p class="text-gray-600 text-center">No biography available.</p>
                 {/if}
             </div>
         </article>
@@ -45,7 +45,7 @@
 
 <style lang="postcss">
     :global(.prose) {
-        @apply text-gray-300;
+        @apply text-gray-800;
     }
     
     :global(.prose strong) {

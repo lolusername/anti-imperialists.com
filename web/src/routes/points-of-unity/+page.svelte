@@ -3,26 +3,26 @@
 	export let data;
 </script>
 
-<main class="bg-black text-white min-h-screen">
+<main class="bg-white text-black min-h-screen">
 	<div class="container mx-auto px-4 max-w-6xl pt-24 text-md md:text-xl lg:text-2xl">
 		<h1 class="font-hero text-6xl font-bold mb-12 text-center text-[#2E8B57]">Principles of Unity</h1>
 		
 		{#if data.pointsOfUnity && data.pointsOfUnity.content}
-			<div class="prose-sm md:prose-xl prose-invert max-w-none">
+			<div class="prose-sm md:prose-xl max-w-none">
 				<PortableText value={data.pointsOfUnity.content} />
 			</div>
 		{:else}
-			<p class="text-gray-400 text-center">Content is being updated...</p>
+			<p class="text-gray-600 text-center">Content is being updated...</p>
 		{/if}
 	</div>
 </main>
 
 <style lang="postcss">
 	:global(.prose) {
-		@apply text-gray-300;
+		@apply text-gray-800;
 	}
 	:global(.prose strong) {
-		@apply text-white text-2xl md:text-3xl lg:text-4xl;
+		@apply text-black text-2xl md:text-3xl lg:text-4xl;
 	}
 	:global(.prose a) {
 		@apply text-[#2E8B57] hover:text-[#FF6347] transition-colors duration-300;

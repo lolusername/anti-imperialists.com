@@ -5,7 +5,7 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				black: '#1C1C1C', // Replace with your custom black color
+				black: '#1C1C1C', // Keep the custom black color for text
 			},
 			fontSize: {
 				base: '1.125rem',    // 18px
@@ -21,8 +21,8 @@ export default {
 			typography: (theme) => ({
 				DEFAULT: {
 					css: {
-						'--tw-prose-bold': theme('colors.white'), // Replace with your desired color value
-						'--tw-prose-headings': theme('colors.white'), // Replace with your desired color value
+						'--tw-prose-bold': theme('colors.black'), // Updated for light mode
+						'--tw-prose-headings': theme('colors.black'), // Updated for light mode
 						fontSize: '1.25rem',
 						p: {
 							fontSize: '1.25rem',

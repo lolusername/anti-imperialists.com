@@ -14,7 +14,7 @@
     }
 </script>
 
-<main class="relative bg-black text-white min-h-screen ">
+<main class="relative bg-white text-black min-h-screen ">
     <div class="container mx-auto px-4 max-w-6xl">
         <h1 class="mt-12 font-hero text-4xl md:text-5xl text-center lg:text-5xl text-[#2E8B57] mb-12">Photos</h1>
 
@@ -22,7 +22,7 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {#each photos as photo}
                     <article 
-                        class="bg-black border-2 border-[#2E8B57] transform transition-all duration-300 hover:scale-105 hover:shadow-lg cursor-pointer"
+                        class="bg-white border-2 border-[#2E8B57] transform transition-all duration-300 hover:scale-105 hover:shadow-lg cursor-pointer shadow-lg"
                         on:click={() => openLightbox(photo)}
                     >
                         <div class="aspect-square">
@@ -36,7 +36,7 @@
                 {/each}
             </div>
         {:else}
-            <p class="text-center text-gray-400 text-xl">No photos available.</p>
+            <p class="text-center text-gray-600 text-xl">No photos available.</p>
         {/if}
     </div>
 </main>

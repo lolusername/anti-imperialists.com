@@ -3,7 +3,7 @@
 	export let data; // SvelteKit automatically passes the returned data from load()
 	let pointsOfUnity = data.pointsOfUnity;
 
-	let isDark = true;
+	let isDark = false;
 	
 	// Professional form styling with dynamic script loading
 	onMount(() => {
@@ -123,7 +123,7 @@
 	});
 </script>
 
-<main class="{isDark ? 'bg-black text-white' : ' text-black'}">
+<main class="{isDark ? 'bg-black text-white' : 'bg-white text-black'}">
 	<div class="container mx-auto px-4 max-w-6xl">
 		<section class="pt-12 md:pt-20 lg:pt-28">
 			<article class="pt-8 md:pt-12 -mb-9">
@@ -159,7 +159,7 @@
 				<div class="absolute -right-3 top-0 bottom-0 w-1 bg-gradient-to-b from-[#FF6347] to-[#2E8B57]"></div>
 				
 				<!-- Content -->
-				<div class="p-10 bg-black bg-opacity-60 backdrop-blur-sm border border-gray-800">
+				<div class="p-10 bg-white bg-opacity-90 backdrop-blur-sm border border-gray-300 shadow-lg">
 					<div class="flex items-center justify-center mb-8">
 						<div class="w-12 h-0.5 bg-gradient-to-r from-transparent to-[#2E8B57]"></div>
 						<h2 class="font-hero text-3xl mx-4 text-[#2E8B57] text-center font-bold px-2">Join Our Newsletter</h2>
@@ -170,7 +170,7 @@
 				</div>
 			</div>
 			
-			<section class="relative border-t-8 border-white pt-8 md:pt-16">
+			<section class="relative border-t-8 border-gray-200 pt-8 md:pt-16">
 				<h2 class="font-hero text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-12 text-[#2E8B57]">Featured Posts and Events</h2>
 				
 				<div class="grid gap-6 md:gap-12">

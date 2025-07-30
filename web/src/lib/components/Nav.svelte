@@ -1,8 +1,20 @@
 <script>
   import { page } from '$app/stores'
+  import { onMount } from 'svelte';
+
+  onMount(() => {
+    if (!window.goatcounterAdded) {
+      const script = document.createElement('script');
+      script.setAttribute('data-goatcounter', 'https://miski.goatcounter.com/count');
+      script.async = true;
+      script.src = 'https://gc.zgo.at/count.js';
+      document.body.appendChild(script);
+      window.goatcounterAdded = true;
+    }
+  });
 </script>
 
-<nav class="fixed w-full z-50 bg-black bg-opacity-90 backdrop-blur-sm text-[#2E8B57] py-4 px-4 top-0 md:block hidden">
+<nav class="fixed w-full z-50 bg-white bg-opacity-90 backdrop-blur-sm text-[#2E8B57] py-4 px-4 top-0 md:block hidden border-b border-gray-200">
   <div class="container mx-auto max-w-6xl relative">
     <ul class="flex justify-center space-x-8 py-2 text-sm md:text-base tracking-widest">
       <li><a href="/" class="hover:text-[#FF6347] transition-colors duration-300 {$page.url.pathname === '/' ? 'italic' : ''}">ABOUT</a></li>
@@ -15,7 +27,7 @@
 </nav>
 
 <!-- Mobile Top Navigation -->
-<nav class="md:hidden fixed top-0 left-0 right-0 bg-black bg-opacity-90 backdrop-blur-sm text-[#2E8B57] py-2 px-1 z-50 border-b border-[#2E8B57]">
+<nav class="md:hidden fixed top-0 left-0 right-0 bg-white bg-opacity-90 backdrop-blur-sm text-[#2E8B57] py-2 px-1 z-50 border-b border-[#2E8B57]">
   <ul class="flex justify-between items-center">
     <li class="flex-1">
       <a 
