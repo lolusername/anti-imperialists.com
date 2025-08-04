@@ -3,7 +3,7 @@
 	export let data;
 </script>
 
-<main class="bg-white text-black min-h-screen">
+<main class="bg-white dark:bg-black text-black dark:text-white min-h-screen">
 	<div class="container mx-auto px-4 max-w-6xl pt-24 text-md md:text-xl lg:text-2xl">
 		<h1 class="font-hero text-6xl font-bold mb-12 text-center text-[#2E8B57]">Principles of Unity</h1>
 		
@@ -12,17 +12,17 @@
 				<PortableText value={data.pointsOfUnity.content} />
 			</div>
 		{:else}
-			<p class="text-gray-600 text-center">Content is being updated...</p>
+			<p class="text-gray-600 dark:text-gray-400 text-center">Content is being updated...</p>
 		{/if}
 	</div>
 </main>
 
 <style lang="postcss">
 	:global(.prose) {
-		@apply text-gray-800;
+		@apply text-gray-800 dark:text-gray-200;
 	}
 	:global(.prose strong) {
-		@apply text-black text-2xl md:text-3xl lg:text-4xl;
+		@apply text-black dark:text-white text-2xl md:text-3xl lg:text-4xl;
 	}
 	:global(.prose a) {
 		@apply text-[#2E8B57] hover:text-[#FF6347] transition-colors duration-300;

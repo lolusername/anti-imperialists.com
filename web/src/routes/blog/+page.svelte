@@ -76,12 +76,12 @@
 	}
 </script>
 
-<main class="relative bg-white text-black min-h-screen pt-12">
+<main class="relative bg-white dark:bg-black text-black dark:text-white min-h-screen pt-12">
 	<div class="container mx-auto px-4 max-w-6xl">
 		<!-- Header section -->
 		<header class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 mb-16">
 			<div class="w-32 md:w-48 relative">
-				<div class="aspect-square rounded-full bg-white glow relative">
+				<div class="aspect-square rounded-full bg-white dark:bg-black glow relative">
 					<img 
 						src="/logo.jpeg" 
 						alt="AISC logo" 
@@ -102,7 +102,7 @@
 				<h2 class="font-hero text-2xl text-[#2E8B57] mb-4">Editorial Board</h2>
 				<div class="flex flex-wrap justify-center gap-4">
 					{#each sortMembers(editorialBoard) as member}
-						<div class="text-black">
+						<div class="text-black dark:text-white">
 							<a 
 								href="/members/{member.slug}" 
 								class="font-bold hover:text-[#2E8B57] transition-colors duration-300"
@@ -110,7 +110,7 @@
 								{member.name}
 							</a>
 							{#if member.affiliation}
-								<span class="text-gray-600 ml-2">({member.affiliation})</span>
+								<span class="text-gray-600 dark:text-gray-400 ml-2">({member.affiliation})</span>
 							{/if}
 						</div>
 					{/each}
@@ -122,18 +122,18 @@
 			<!-- Left Column: Editorial Statement and Submission Instructions -->
 			<div class="lg:w-[40%] space-y-8">
 				{#if editorialStatement}
-					<div class="bg-white border-2 border-[#2E8B57] p-6 shadow-lg">
+					<div class="bg-white dark:bg-black border-2 border-[#2E8B57] p-6 shadow-lg">
 						<h2 class="font-hero text-2xl text-[#2E8B57] mb-4">Editorial Statement</h2>
-						<div class="prose prose-sm text-black max-w-none">
+						<div class="prose prose-sm text-black dark:text-white max-w-none">
 							<PortableText value={editorialStatement} {components} />
 						</div>
 					</div>
 				{/if}
 
 				{#if submissionInstructions}
-					<div class="bg-white border-2 border-[#2E8B57] p-6 mt-8 shadow-lg">
+					<div class="bg-white dark:bg-black border-2 border-[#2E8B57] p-6 mt-8 shadow-lg">
 						<h2 class="font-hero text-2xl text-[#2E8B57] mb-4">Submission Instructions</h2>
-						<div class="prose prose-sm text-black max-w-none">
+						<div class="prose prose-sm text-black dark:text-white max-w-none">
 							<PortableText value={submissionInstructions} {components} />
 						</div>
 					</div>
@@ -146,7 +146,7 @@
 					{#each volumes as volume}
 						<div class="mb-8">
 							<button
-								class="w-full bg-white border-2 border-[#FF6347] p-4 flex justify-between items-center text-left hover:bg-[#FF6347] hover:text-white transition-colors duration-300 shadow-lg"
+								class="w-full bg-white dark:bg-black border-2 border-[#FF6347] p-4 flex justify-between items-center text-left hover:bg-[#FF6347] hover:text-white transition-colors duration-300 shadow-lg"
 								on:click={() => toggleVolume(volume._id)}
 							>
 								<h2 class="font-hero text-2xl uppercase">{`${volume.title} ${volume.number}`}</h2>
@@ -158,14 +158,14 @@
 							{#if expandedIds.includes(volume._id)}
 								<div class="grid md:grid-cols-2 gap-8 mt-8">
 									{#each sortPosts(volume.posts) as post}
-										<article class="bg-white border-2 border-[#2E8B57] p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-lg min-h-[200px] flex flex-col justify-between shadow-lg">
+										<article class="bg-white dark:bg-black border-2 border-[#2E8B57] p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-lg min-h-[200px] flex flex-col justify-between shadow-lg">
 											<div>
 												<h3 class="font-hero text-xl font-semibold mb-3">{post.title}</h3>
 												{#if post.featured}
 													<span class="inline-block bg-[#FF6347] text-white text-xs font-bold px-2 py-1 rounded-sm uppercase tracking-wider mb-2">Original Content</span>
 												{/if}
 												{#if post.author}
-													<p class="text-sm text-gray-600">By {post.author}</p>
+													<p class="text-sm text-gray-600 dark:text-gray-400">By {post.author}</p>
 												{/if}
 											</div>
 											<a 
@@ -181,7 +181,7 @@
 						</div>
 					{/each}
 				{:else}
-					<p class="text-center text-gray-600 text-xl">No volumes available.</p>
+					<p class="text-center text-gray-600 dark:text-gray-400 text-xl">No volumes available.</p>
 				{/if}
 			</div>
 		</div>

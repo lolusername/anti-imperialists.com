@@ -3,7 +3,7 @@
     const { logos } = data;
 </script>
 
-<main class="relative bg-white text-black min-h-screen pt-6">
+<main class="relative bg-white dark:bg-black text-black dark:text-white min-h-screen pt-6">
     <div class="container mx-auto px-4 max-w-6xl">
         <h1 class="mt-12 font-hero text-4xl md:text-5xl text-center lg:text-5xl text-[#2E8B57]">Our Community</h1>
         <div class="text-lg md:text-xl mb-12">
@@ -13,7 +13,7 @@
         {#if logos && logos.length > 0}
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {#each logos as logo}
-                    <article class="bg-white border-2 border-[#2E8B57] p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-lg shadow-lg">
+                    <article class="bg-white dark:bg-black border-2 border-[#2E8B57] p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-lg shadow-lg">
                         {#if logo.imageUrl}
                             <div class="h-48 flex items-center justify-center bg-white p-4">
                                 <img 
@@ -34,7 +34,7 @@
                 {/each}
             </div>
         {:else}
-            <p class="text-center text-gray-600 text-xl">No community logos available.</p>
+            <p class="text-center text-gray-600 dark:text-gray-400 text-xl">No community logos available.</p>
         {/if}
     </div>
 </main>

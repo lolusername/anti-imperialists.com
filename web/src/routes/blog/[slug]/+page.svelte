@@ -52,13 +52,13 @@
   }
 </script>
 
-<main class="bg-white text-black min-h-screen">
+<main class="bg-white dark:bg-black text-black dark:text-white min-h-screen">
   <!-- Content wrapper with proper padding for nav -->
   <div class="pt-24">
     {#if $page.status === 404}
       <div class="container mx-auto px-4 max-w-4xl text-center py-16">
         <h1 class="text-4xl font-hero text-[#2E8B57] mb-4">Post Not Found</h1>
-        <p class="text-gray-600 mb-8">The blog post you're looking for doesn't exist.</p>
+        <p class="text-gray-600 dark:text-gray-400 mb-8">The blog post you're looking for doesn't exist.</p>
         <a href="/blog" class="text-[#FF6347] hover:text-[#2E8B57] transition-colors duration-300">
           Return to Blog
         </a>
@@ -66,7 +66,7 @@
     {:else if $page.status === 500}
       <div class="container mx-auto px-4 max-w-4xl text-center py-16">
         <h1 class="text-4xl font-hero text-[#2E8B57] mb-4">Error Loading Post</h1>
-        <p class="text-gray-600 mb-8">There was an error loading this blog post. Please try again later.</p>
+        <p class="text-gray-600 dark:text-gray-400 mb-8">There was an error loading this blog post. Please try again later.</p>
         <a href="/blog" class="text-[#FF6347] hover:text-[#2E8B57] transition-colors duration-300">
           Return to Blog
         </a>
@@ -74,7 +74,7 @@
     {:else if !blog}
       <div class="container mx-auto px-4 max-w-4xl text-center py-16">
         <h1 class="text-4xl font-hero text-[#2E8B57] mb-4">Error Loading Post</h1>
-        <p class="text-gray-600 mb-8">The blog post data is missing. Please try again later.</p>
+        <p class="text-gray-600 dark:text-gray-400 mb-8">The blog post data is missing. Please try again later.</p>
         <a href="/blog" class="text-[#FF6347] hover:text-[#2E8B57] transition-colors duration-300">
           Return to Blog
         </a>
@@ -96,12 +96,12 @@
         <article class="prose prose-invert prose-lg mx-auto">
           <!-- Title and metadata section -->
           <header class="mb-16 mt-24 text-center">
-            <h1 class="font-hero text-5xl md:text-6xl lg:text-7xl font-bold mb-8 text-black">
+            <h1 class="font-hero text-5xl md:text-6xl lg:text-7xl font-bold mb-8 text-black dark:text-white">
               {blog.title}
             </h1>
             
             {#if blog.author || blog.publishedAt}
-              <div class="border-t border-b border-[#2E8B57] py-4 text-gray-400 flex items-center justify-center space-x-4">
+              <div class="border-t border-b border-[#2E8B57] py-4 text-gray-400 dark:text-gray-300 flex items-center justify-center space-x-4">
                 {#if blog.author}
                   <span>By {blog.author}</span>
                 {/if}

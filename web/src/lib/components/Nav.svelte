@@ -2,7 +2,14 @@
   import { page } from '$app/stores'
   import { onMount } from 'svelte';
 
+  let isDark = false;
+
   onMount(() => {
+    // Check for saved theme preference or default to light mode
+    const savedTheme = localStorage.getItem('theme');
+    isDark = savedTheme === 'dark';
+    updateTheme();
+    
     if (!window.goatcounterAdded) {
       const script = document.createElement('script');
       script.setAttribute('data-goatcounter', 'https://miski.goatcounter.com/count');
@@ -12,9 +19,23 @@
       window.goatcounterAdded = true;
     }
   });
+
+  function toggleTheme() {
+    isDark = !isDark;
+    updateTheme();
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  }
+
+  function updateTheme() {
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }
 </script>
 
-<nav class="fixed w-full z-50 bg-white bg-opacity-90 backdrop-blur-sm text-[#2E8B57] py-4 px-4 top-0 md:block hidden border-b border-gray-200">
+<nav class="fixed w-full z-50 bg-white dark:bg-black bg-opacity-90 dark:bg-opacity-90 backdrop-blur-sm text-[#2E8B57] py-4 px-4 top-0 md:block hidden border-b border-gray-200 dark:border-gray-700">
   <div class="container mx-auto max-w-6xl relative">
     <ul class="flex justify-center space-x-8 py-2 text-sm md:text-base tracking-widest">
       <li><a href="/" class="hover:text-[#FF6347] transition-colors duration-300 {$page.url.pathname === '/' ? 'italic' : ''}">ABOUT</a></li>
@@ -22,12 +43,21 @@
       <li><a href="/members" class="hover:text-[#FF6347] transition-colors duration-300 {$page.url.pathname === '/members/' ? 'italic' : ''}">MEMBERS</a></li>
       <li><a href="/points-of-unity" class="hover:text-[#FF6347] transition-colors duration-300 {$page.url.pathname === '/points-of-unity/' ? 'italic' : ''}">PRINCIPLES OF UNITY</a></li>
       <li><a href="/community" class="hover:text-[#FF6347] transition-colors duration-300 {$page.url.pathname === '/community/' ? 'italic' : ''}">COMMUNITY</a></li>
+      <li>
+        <button 
+          on:click={toggleTheme}
+          class="hover:text-[#FF6347] transition-colors duration-300 text-lg"
+          title="Toggle dark mode"
+        >
+          {isDark ? '☀️' : '🌙'}
+        </button>
+      </li>
     </ul>
   </div>
 </nav>
 
 <!-- Mobile Top Navigation -->
-<nav class="md:hidden fixed top-0 left-0 right-0 bg-white bg-opacity-90 backdrop-blur-sm text-[#2E8B57] py-2 px-1 z-50 border-b border-[#2E8B57]">
+<nav class="md:hidden fixed top-0 left-0 right-0 bg-white dark:bg-black bg-opacity-90 dark:bg-opacity-90 backdrop-blur-sm text-[#2E8B57] py-2 px-1 z-50 border-b border-[#2E8B57]">
   <ul class="flex justify-between items-center">
     <li class="flex-1">
       <a 
@@ -68,6 +98,15 @@
       >
         <span class="text-xs font-medium">COMMUNITY</span>
       </a>
+    </li>
+    <li class="flex-1">
+      <button 
+        on:click={toggleTheme}
+        class="block text-center py-3 px-1 text-xs font-medium"
+        title="Toggle dark mode"
+      >
+        {isDark ? '☀️' : '🌙'}
+      </button>
     </li>
   </ul>
 </nav>

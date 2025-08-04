@@ -14,7 +14,7 @@
   }
 </script>
 
-<li class="text-white {listStyle} ml-4">
+<li class="text-black dark:text-white {listStyle} ml-4">
   {#if Array.isArray(children)}
     {#each children as child}
       {#if typeof child === 'string'}
