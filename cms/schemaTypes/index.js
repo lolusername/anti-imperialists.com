@@ -7,7 +7,7 @@ import {photos} from './documents/photos'
 import {submissionInstructions} from './documents/submissionInstructions'
 import {editorialStatement} from './documents/editorialStatement'
 import {volume} from './documents/volume'
-import {statements} from './documents/statements'
+import {statementsSeries} from './documents/statementsSeries'
 
 export const schemaTypes = [
   pointsOfUnity,
@@ -18,6 +18,6 @@ export const schemaTypes = [
   photos,
   submissionInstructions,
   editorialStatement,
-  volume
-  statements
+  volume,
+  statementsSeries,
 ]

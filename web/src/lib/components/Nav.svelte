@@ -1,15 +1,13 @@
 <script>
   import { page } from '$app/stores'
+  import { theme } from '$lib/stores/theme.js';
   import { onMount } from 'svelte';
 
-  let isDark = false;
+  function toggleTheme() {
+    theme.update(current => current === 'dark' ? 'light' : 'dark');
+  }
 
   onMount(() => {
-    // Check for saved theme preference or default to light mode
-    const savedTheme = localStorage.getItem('theme');
-    isDark = savedTheme === 'dark';
-    updateTheme();
-    
     if (!window.goatcounterAdded) {
       const script = document.createElement('script');
       script.setAttribute('data-goatcounter', 'https://miski.goatcounter.com/count');
@@ -19,20 +17,6 @@
       window.goatcounterAdded = true;
     }
   });
-
-  function toggleTheme() {
-    isDark = !isDark;
-    updateTheme();
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  }
-
-  function updateTheme() {
-    if (isDark) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }
 </script>
 
 <nav class="fixed w-full z-50 bg-white dark:bg-black bg-opacity-90 dark:bg-opacity-90 backdrop-blur-sm text-[#2E8B57] py-4 px-4 top-0 md:block hidden border-b border-gray-200 dark:border-gray-700">
@@ -49,7 +33,7 @@
           class="hover:text-[#FF6347] transition-colors duration-300 text-lg"
           title="Toggle dark mode"
         >
-          {isDark ? '☀️' : '🌙'}
+          {$theme === 'dark' ? '☀️' : '🌙'}
         </button>
       </li>
     </ul>
@@ -105,7 +89,7 @@
         class="block text-center py-3 px-1 text-xs font-medium"
         title="Toggle dark mode"
       >
-        {isDark ? '☀️' : '🌙'}
+        {$theme === 'dark' ? '☀️' : '🌙'}
       </button>
     </li>
   </ul>
