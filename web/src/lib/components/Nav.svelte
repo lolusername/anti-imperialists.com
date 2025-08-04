@@ -3,14 +3,13 @@
   import { theme } from '$lib/stores/theme.js';
   import { onMount } from 'svelte';
 
-  function toggleTheme() {
-    theme.update(current => current === 'dark' ? 'light' : 'dark');
-  }
+  const toggleTheme = () => theme.toggle();
 
   onMount(() => {
-    if (!window.goatcounterAdded) {
+    // GoatCounter injection should only run in the browser
+    if (browser && !window.goatcounterAdded) {
       const script = document.createElement('script');
-      script.setAttribute('data-goatcounter', 'https://miski.goatcounter.com/count');
+      script.dataset.goatcounter = 'https://miski.goatcounter.com/count';
       script.async = true;
       script.src = 'https://gc.zgo.at/count.js';
       document.body.appendChild(script);
