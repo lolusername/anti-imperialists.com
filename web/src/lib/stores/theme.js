@@ -18,7 +18,7 @@ function createThemeStore() {
 
   return {
     subscribe,
-    toggle: () => update(v => (v === 'dark' ? 'light' : 'light'))
+    toggle: () => update(v => (v === 'dark' ? 'light' : 'dark'))
   };
 }
 
