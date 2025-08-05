@@ -7,7 +7,7 @@
     listStyle = 'list-disc';
   } else if (node?.listItem === 'number') {
     listStyle = 'list-decimal';
-  } else if (node?.style === 'normal') {
+  } else if (node?.listItem === 'normal' || node?.style === 'normal') {
     listStyle = 'list-none';
   } else {
     listStyle = 'list-none';

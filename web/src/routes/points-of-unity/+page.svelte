@@ -1,6 +1,11 @@
 <script>
 	import { PortableText } from '@portabletext/svelte';
+	import ListItem from '$lib/components/ListItem.svelte';
 	export let data;
+
+	const components = {
+		listItem: ListItem
+	};
 </script>
 
 <main class="bg-white dark:bg-black text-black dark:text-white min-h-screen">
@@ -9,7 +14,7 @@
 		
 		{#if data.pointsOfUnity && data.pointsOfUnity.content}
 			<div class="prose-sm md:prose-xl max-w-none">
-				<PortableText value={data.pointsOfUnity.content} />
+				<PortableText value={data.pointsOfUnity.content} components={components} />
 			</div>
 		{:else}
 			<p class="text-gray-600 dark:text-gray-400 text-center">Content is being updated...</p>

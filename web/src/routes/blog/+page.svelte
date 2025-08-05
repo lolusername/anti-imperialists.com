@@ -21,10 +21,7 @@
 			image: Image,
 			block: Block
 		},
-		listItem: ({ children, node }) => {
-			const style = node?.listItem === 'bullet' ? 'list-disc' : node?.listItem === 'number' ? 'list-decimal' : '';
-			return `<li class="text-white ${style} ml-4">${children}</li>`;
-		}
+		listItem: ListItem
 	};
 
 	let expandedIds = [];

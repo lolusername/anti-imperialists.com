@@ -1,7 +1,12 @@
 <script>
     import { PortableText } from '@portabletext/svelte';
+    import ListItem from '$lib/components/ListItem.svelte';
     export let data;
     const { statement } = data;
+
+    const components = {
+        listItem: ListItem
+    };
 </script>
 
 <main class="relative bg-white dark:bg-black text-black dark:text-white min-h-screen pt-36">
@@ -22,7 +27,7 @@
 
             <div class="prose prose-lg max-w-none">
                 {#if statement.content}
-                    <PortableText value={statement.content} />
+                    <PortableText value={statement.content} components={components} />
                 {:else}
                     <p class="text-gray-600 dark:text-gray-400 text-center">No content available.</p>
                 {/if}

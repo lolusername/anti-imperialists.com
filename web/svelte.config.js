@@ -13,9 +13,12 @@ const config = {
 			strict: false
 		}),
 		prerender: {
-			handleHttpError: ({ message }) => {
+			handleHttpError: ({ message, status, path }) => {
 				// ignore all 404s during prerendering
-				if (message.includes('Not found')) return;
+				if (status === 404 || message.includes('Not found')) {
+					console.warn(`Ignoring 404 for path: ${path}`);
+					return;
+				}
 				// otherwise fail the build
 				throw new Error(message);
 			},

@@ -1,7 +1,12 @@
 <script>
     import { PortableText } from '@portabletext/svelte'
+    import ListItem from '$lib/components/ListItem.svelte';
     export let data
     const { member } = data
+
+    const components = {
+        listItem: ListItem
+    };
 </script>
 
 <main class="relative bg-white dark:bg-black text-black dark:text-white min-h-screen pt-36">
@@ -25,7 +30,7 @@
 
             <div class="prose prose-lg max-w-none">
                 {#if member.bio}
-                    <PortableText value={member.bio} />
+                    <PortableText value={member.bio} components={components} />
                 {:else}
                     <p class="text-gray-600 dark:text-gray-400 text-center">No biography available.</p>
                 {/if}
