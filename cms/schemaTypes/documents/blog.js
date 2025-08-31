@@ -101,8 +101,15 @@ export const blog = defineType({
     defineField({
       name: 'author',
       title: 'Author',
-      type: 'reference',
-      to: [{type: 'memberBio'}],
+      type: 'author',
+      description: 'Flexible author system - supports bio pages, standalone authors, and editorial members'
+    }),
+    defineField({
+      name: 'additionalAuthors',
+      title: 'Additional Authors',
+      type: 'array',
+      of: [{type: 'author'}],
+      description: 'Add additional authors if this piece has multiple contributors'
     }),
     defineField({
       name: 'featured',
@@ -118,15 +125,45 @@ export const blog = defineType({
   preview: {
     select: {
       title: 'title',
-      author: 'author.name',
+      author: 'author',
+      additionalAuthors: 'additionalAuthors',
       volume: 'volume.number',
       media: 'mainImage'
     },
     prepare(selection) {
-      const {author, volume} = selection
+      const {author, additionalAuthors, volume} = selection
+      
+      let authorText = ''
+      
+      if (author) {
+        if (author.authorType === 'memberBio' && author.memberBio?.name) {
+          authorText = author.memberBio.name
+        } else if (author.name) {
+          authorText = author.name
+        }
+      }
+      
+      // Add additional authors
+      if (additionalAuthors && additionalAuthors.length > 0) {
+        const additionalAuthorNames = additionalAuthors.map(auth => {
+          if (auth.authorType === 'memberBio' && auth.memberBio?.name) {
+            return auth.memberBio.name
+          } else if (auth.name) {
+            return auth.name
+          }
+          return 'Unknown Author'
+        }).filter(name => name !== 'Unknown Author')
+        
+        if (authorText && additionalAuthorNames.length > 0) {
+          authorText = `${authorText} + ${additionalAuthorNames.length} more`
+        } else if (additionalAuthorNames.length > 0) {
+          authorText = additionalAuthorNames.join(', ')
+        }
+      }
+      
       return {
         ...selection,
-        subtitle: `${volume ? `Volume ${volume} - ` : ''}${author ? `by ${author}` : ''}`
+        subtitle: `${volume ? `Volume ${volume} - ` : ''}${authorText ? `by ${authorText}` : ''}`
       }
     }
   }

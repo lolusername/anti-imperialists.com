@@ -6,7 +6,34 @@ export async function load() {
       title,
       slug,
       "preview": body[0].children[0].text,
-      "author": author->name,
+      author{
+        authorType,
+        memberBio->{
+          _id,
+          name,
+          bio,
+          image
+        },
+        name,
+        affiliation,
+        email,
+        website,
+        editorialRole
+      },
+      additionalAuthors[]{
+        authorType,
+        memberBio->{
+          _id,
+          name,
+          bio,
+          image
+        },
+        name,
+        affiliation,
+        email,
+        website,
+        editorialRole
+      },
       publishedAt
     }
   `)

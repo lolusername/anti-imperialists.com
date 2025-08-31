@@ -16,7 +16,34 @@ export async function load() {
             _id,
             title,
             "slug": slug.current,
-            "author": author->name,
+            author{
+              authorType,
+              memberBio->{
+                _id,
+                name,
+                bio,
+                image
+              },
+              name,
+              affiliation,
+              email,
+              website,
+              editorialRole
+            },
+            additionalAuthors[]{
+              authorType,
+              memberBio->{
+                _id,
+                name,
+                bio,
+                image
+              },
+              name,
+              affiliation,
+              email,
+              website,
+              editorialRole
+            },
             "featured": coalesce(featured, false),
             publishedAt,
             mainImage{

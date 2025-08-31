@@ -15,9 +15,34 @@ export async function load({ params }) {
       *[_type == "blog" && slug.current == $slug][0]{
         _id,
         title,
-        "author": author->name,
-        "authorBio": author->bio,
-        "authorImage": author->image,
+        author{
+          authorType,
+          memberBio->{
+            _id,
+            name,
+            bio,
+            image
+          },
+          name,
+          affiliation,
+          email,
+          website,
+          editorialRole
+        },
+        additionalAuthors[]{
+          authorType,
+          memberBio->{
+            _id,
+            name,
+            bio,
+            image
+          },
+          name,
+          affiliation,
+          email,
+          website,
+          editorialRole
+        },
         "featured": coalesce(featured, false),
         "volume": volume->title,
         "volumeNumber": volume->number,

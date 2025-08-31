@@ -4,6 +4,8 @@
 	import Block from '$lib/components/Block.svelte';
 	import ListItem from '$lib/components/ListItem.svelte';
 	import { onMount } from 'svelte';
+	import { getAllAuthorsDisplayNames } from '$lib/utils/authorUtils';
+	
 	export let data;
 	const { volumes, editorialStatement, submissionInstructions, editorialBoard } = data;
 
@@ -41,8 +43,9 @@
 			
 			// Then sort by author last name
 			const getLastName = (post) => {
-				if (!post.author) return '';
-				const nameParts = post.author.split(' ');
+				const authorNames = getAllAuthorsDisplayNames(post.author, post.additionalAuthors);
+				if (!authorNames) return '';
+				const nameParts = authorNames.split(' ');
 				return nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
 			};
 			
@@ -73,7 +76,7 @@
 	}
 </script>
 
-<main class="relative bg-white dark:bg-black text-black dark:text-white min-h-screen pt-12">
+<main class="relative bg-white dark:bg-black text-black dark:text-white min-h-screen pt-24">
 	<div class="container mx-auto px-4 max-w-6xl">
 		<!-- Header section -->
 		<header class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 mb-16">
@@ -161,8 +164,10 @@
 												{#if post.featured}
 													<span class="inline-block bg-[#FF6347] text-white text-xs font-bold px-2 py-1 rounded-sm uppercase tracking-wider mb-2">Original Content</span>
 												{/if}
-												{#if post.author}
-													<p class="text-sm text-gray-600 dark:text-gray-400">By {post.author}</p>
+												{#if post.author || (post.additionalAuthors && post.additionalAuthors.length > 0)}
+													<p class="text-sm text-gray-600 dark:text-gray-400">
+														By {getAllAuthorsDisplayNames(post.author, post.additionalAuthors)}
+													</p>
 												{/if}
 											</div>
 											<a 

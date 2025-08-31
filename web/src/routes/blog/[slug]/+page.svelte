@@ -7,6 +7,8 @@
   import { onMount } from 'svelte';
   import ListItem from '$lib/components/ListItem.svelte';
   import Block from '$lib/components/Block.svelte';
+  import { getAllAuthorsDisplayNames } from '$lib/utils/authorUtils';
+  
   export let data;
   const { blog } = data;
 
@@ -22,6 +24,9 @@
     if (!image?.asset?.url) return null
     return image.asset.url
   }
+
+  // Get all author names for display
+  $: authorDisplayText = getAllAuthorsDisplayNames(blog.author, blog.additionalAuthors)
 
   // Extract footnotes from body content
   let footnotes = [];
@@ -54,7 +59,7 @@
 
 <main class="bg-white dark:bg-black text-black dark:text-white min-h-screen">
   <!-- Content wrapper with proper padding for nav -->
-  <div class="pt-24">
+  <div class="pt-20">
     {#if $page.status === 404}
       <div class="container mx-auto px-4 max-w-4xl text-center py-16">
         <h1 class="text-4xl font-hero text-[#2E8B57] mb-4">Post Not Found</h1>
@@ -92,18 +97,18 @@
         </div>
       {/if}
 
-      <div class="container mx-auto px-4 max-w-4xl relative z-10 {blog.mainImage ? '-mt-24' : 'mt-12'}">
+      <div class="container mx-auto px-4 max-w-4xl relative z-10 {blog.mainImage ? '-mt-16' : 'mt-8'}">
         <article class="prose prose-invert prose-lg mx-auto">
           <!-- Title and metadata section -->
-          <header class="mb-16 mt-24 text-center">
+          <header class="mb-16 text-center">
             <h1 class="font-hero text-5xl md:text-6xl lg:text-7xl font-bold mb-8 text-black dark:text-white">
               {blog.title}
             </h1>
             
-            {#if blog.author || blog.publishedAt}
+            {#if authorDisplayText || blog.publishedAt}
               <div class="border-t border-b border-[#2E8B57] py-4 text-gray-400 dark:text-gray-300 flex items-center justify-center space-x-4">
-                {#if blog.author}
-                  <span>By {blog.author}</span>
+                {#if authorDisplayText}
+                  <span>By {authorDisplayText}</span>
                 {/if}
                 {#if blog.publishedAt}
                   <span class="text-[#FF6347]">•</span>

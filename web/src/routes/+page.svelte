@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
+	import { getAllAuthorsDisplayNames } from '$lib/utils/authorUtils';
 	export let data; // SvelteKit automatically passes the returned data from load()
 	let pointsOfUnity = data.pointsOfUnity;
 	
@@ -43,73 +44,102 @@
 						if (formContainer) {
 							formContainer.style.fontFamily = 'inherit';
 							
-							// Apply professional styling to all inputs
-							const formInputs = document.querySelectorAll('#audienceful-5ejxTA input[type="text"], #audienceful-5ejxTA input[type="email"]');
-							formInputs.forEach(input => {
-								// Enhanced input styling
-								input.style.backgroundColor = 'rgba(20, 20, 20, 0.8)';
-								input.style.borderWidth = '1px';
-								input.style.borderColor = '#333';
-								input.style.borderRadius = '2px';
-								input.style.padding = '12px 16px';
-								input.style.fontSize = '16px';
-								input.style.color = 'white';
-								input.style.width = '100%';
-								input.style.marginBottom = '12px';
-								input.style.transition = 'all 0.2s ease';
-								input.style.boxShadow = 'none';
-								
-								// Focus styles using event listeners
-								input.addEventListener('focus', () => {
-									input.style.borderColor = '#2E8B57';
-									input.style.outline = 'none';
-									input.style.boxShadow = '0 0 0 1px #2E8B57';
+							// Force apply styles to all inputs with multiple attempts
+							const applyInputStyles = () => {
+								const formInputs = document.querySelectorAll('#audienceful-5ejxTA input[type="text"], #audienceful-5ejxTA input[type="email"]');
+								formInputs.forEach(input => {
+									// Force white text color
+									input.style.setProperty('color', 'white', 'important');
+									input.style.setProperty('background-color', 'rgba(20, 20, 20, 0.8)', 'important');
+									input.style.setProperty('border', '1px solid #333', 'important');
+									input.style.setProperty('border-radius', '2px', 'important');
+									input.style.setProperty('padding', '12px 16px', 'important');
+									input.style.setProperty('font-size', '16px', 'important');
+									input.style.setProperty('width', '100%', 'important');
+									input.style.setProperty('margin-bottom', '12px', 'important');
+									input.style.setProperty('transition', 'all 0.2s ease', 'important');
+									input.style.setProperty('box-shadow', 'none', 'important');
+									
+									// Add focus event listeners
+									input.addEventListener('focus', () => {
+										input.style.setProperty('border-color', '#2E8B57', 'important');
+										input.style.setProperty('outline', 'none', 'important');
+										input.style.setProperty('box-shadow', '0 0 0 1px #2E8B57', 'important');
+									});
+									
+									input.addEventListener('blur', () => {
+										input.style.setProperty('border-color', '#333', 'important');
+										input.style.setProperty('box-shadow', 'none', 'important');
+									});
 								});
-								
-								input.addEventListener('blur', () => {
-									input.style.borderColor = '#333';
-									input.style.boxShadow = 'none';
+							};
+							
+							// Apply styles immediately and then retry a few times
+							applyInputStyles();
+							setTimeout(applyInputStyles, 100);
+							setTimeout(applyInputStyles, 500);
+							setTimeout(applyInputStyles, 1000);
+							
+							// Set up a MutationObserver to continuously monitor for form changes
+							const observer = new MutationObserver((mutations) => {
+								mutations.forEach((mutation) => {
+									if (mutation.type === 'childList' || mutation.type === 'attributes') {
+										// Re-apply styles whenever the form changes
+										setTimeout(applyInputStyles, 50);
+									}
 								});
 							});
 							
-							// Professional button styling
-							const submitButton = document.querySelector('#audienceful-5ejxTA button[type="submit"]');
-							if (submitButton) {
-								submitButton.style.backgroundColor = '#2E8B57';
-								submitButton.style.color = 'white';
-								submitButton.style.border = 'none';
-								submitButton.style.borderRadius = '2px';
-								submitButton.style.padding = '12px 24px';
-								submitButton.style.fontSize = '16px';
-								submitButton.style.fontWeight = '600';
-								submitButton.style.cursor = 'pointer';
-								submitButton.style.width = '100%';
-								submitButton.style.marginTop = '4px';
-								submitButton.style.transition = 'all 0.3s ease';
-								submitButton.style.letterSpacing = '0.5px';
-								submitButton.style.textTransform = 'uppercase';
-								
-								// Hover effects
-								submitButton.addEventListener('mouseover', () => {
-									submitButton.style.backgroundColor = '#FF6347';
-									submitButton.style.transform = 'translateY(-2px)';
-									submitButton.style.boxShadow = '0 4px 10px rgba(255, 99, 71, 0.3)';
-								});
-								
-								submitButton.addEventListener('mouseout', () => {
-									submitButton.style.backgroundColor = '#2E8B57';
-									submitButton.style.transform = 'translateY(0)';
-									submitButton.style.boxShadow = 'none';
+							// Start observing the form container
+							if (formContainer) {
+								observer.observe(formContainer, {
+									childList: true,
+									subtree: true,
+									attributes: true,
+									attributeFilter: ['style', 'class']
 								});
 							}
 							
-							// Style any text that appears under the form
+							// Also set up a periodic check as a backup
+							const intervalId = setInterval(() => {
+								const inputs = document.querySelectorAll('#audienceful-5ejxTA input');
+								if (inputs.length > 0) {
+									applyInputStyles();
+								}
+							}, 2000);
+							
+							// Clean up interval after 30 seconds
+							setTimeout(() => {
+								clearInterval(intervalId);
+								observer.disconnect();
+							}, 30000);
+							
+							// Style submit button
+							const submitButton = document.querySelector('#audienceful-5ejxTA button[type="submit"]');
+							if (submitButton) {
+								submitButton.style.setProperty('background-color', '#2E8B57', 'important');
+								submitButton.style.setProperty('color', 'white', 'important');
+								submitButton.style.setProperty('border', 'none', 'important');
+								submitButton.style.setProperty('border-radius', '2px', 'important');
+								submitButton.style.setProperty('padding', '12px 24px', 'important');
+								submitButton.style.setProperty('font-size', '16px', 'important');
+								submitButton.style.setProperty('font-weight', '600', 'important');
+								submitButton.style.setProperty('cursor', 'pointer', 'important');
+								submitButton.style.setProperty('width', '100%', 'important');
+								submitButton.style.setProperty('margin-top', '4px', 'important');
+								submitButton.style.setProperty('transition', 'all 0.3s ease', 'important');
+								submitButton.style.setProperty('letter-spacing', '0.5px', 'important');
+								submitButton.style.setProperty('text-transform', 'uppercase', 'important');
+							}
+							
+							// Style footer text
 							const formFooter = document.querySelector('#audienceful-5ejxTA .footer, #audienceful-5ejxTA .powered-by');
 							if (formFooter) {
-								formFooter.style.fontSize = '12px';
-								formFooter.style.opacity = '0.6';
-								formFooter.style.textAlign = 'center';
-								formFooter.style.marginTop = '12px';
+								formFooter.style.setProperty('font-size', '12px', 'important');
+								formFooter.style.setProperty('opacity', '0.6', 'important');
+								formFooter.style.setProperty('text-align', 'center', 'important');
+								formFooter.style.setProperty('margin-top', '12px', 'important');
+								formFooter.style.setProperty('color', 'white', 'important');
 							}
 						}
 					}, 800); // More time to ensure form is fully rendered
@@ -179,8 +209,10 @@
 								<article class="mb-4 md:mb-8 p-4 md:p-6 border-2 border-[#2E8B57] transform transition-transform hover:scale-105">
 									<h4 class="font-hero text-lg md:text-xl lg:text-2xl font-semibold mb-2 md:mb-3">{post.title}</h4>
 									<span class="inline-block bg-[#FF6347] text-black text-xs font-bold px-2 py-1 rounded-sm uppercase tracking-wider mb-2">Original Content</span>
-									{#if post.author}
-										<p class="text-sm text-gray-400">By {post.author}</p>
+									{#if post.author || (post.additionalAuthors && post.additionalAuthors.length > 0)}
+										<p class="text-sm text-gray-400">
+											By {getAllAuthorsDisplayNames(post.author, post.additionalAuthors)}
+										</p>
 									{/if}
 									<a href="/blog/{post.slug.current}" class="inline-block mt-2 hover:underline font-bold uppercase tracking-wider">Read more →</a>
 								</article>
@@ -191,7 +223,6 @@
 					</div>
 				</div>
 			</section>
-		</section>
 	</div>
 </main>
 
@@ -204,5 +235,84 @@
 	}
 	.audienceful-badge-5ejxTA {
 		display: none !important;
+	}
+	
+	/* Form styling to ensure text is visible */
+	#audienceful-5ejxTA input[type="text"],
+	#audienceful-5ejxTA input[type="email"],
+	#audienceful-5ejxTA input,
+	#audienceful-5ejxTA .input,
+	#audienceful-5ejxTA .form-input {
+		background-color: rgba(20, 20, 20, 0.8) !important;
+		border: 1px solid #333 !important;
+		border-radius: 2px !important;
+		padding: 12px 16px !important;
+		font-size: 16px !important;
+		color: white !important;
+		width: 100% !important;
+		margin-bottom: 12px !important;
+		transition: all 0.2s ease !important;
+		box-shadow: none !important;
+	}
+	
+	#audienceful-5ejxTA input[type="text"]:focus,
+	#audienceful-5ejxTA input[type="email"]:focus,
+	#audienceful-5ejxTA input:focus,
+	#audienceful-5ejxTA .input:focus,
+	#audienceful-5ejxTA .form-input:focus {
+		border-color: #2E8B57 !important;
+		outline: none !important;
+		box-shadow: 0 0 0 1px #2E8B57 !important;
+	}
+	
+	#audienceful-5ejxTA button[type="submit"],
+	#audienceful-5ejxTA button,
+	#audienceful-5ejxTA .button,
+	#audienceful-5ejxTA .submit-button {
+		background-color: #2E8B57 !important;
+		color: white !important;
+		border: none !important;
+		border-radius: 2px !important;
+		padding: 12px 24px !important;
+		font-size: 16px !important;
+		font-weight: 600 !important;
+		cursor: pointer !important;
+		width: 100% !important;
+		margin-top: 4px !important;
+		transition: all 0.3s ease !important;
+		letter-spacing: 0.5px !important;
+		text-transform: uppercase !important;
+	}
+	
+	#audienceful-5ejxTA button[type="submit"]:hover,
+	#audienceful-5ejxTA button:hover,
+	#audienceful-5ejxTA .button:hover,
+	#audienceful-5ejxTA .submit-button:hover {
+		background-color: #FF6347 !important;
+		transform: translateY(-2px) !important;
+		box-shadow: 0 4px 10px rgba(255, 99, 71, 0.3) !important;
+	}
+	
+	#audienceful-5ejxTA .footer,
+	#audienceful-5ejxTA .powered-by,
+	#audienceful-5ejxTA p,
+	#audienceful-5ejxTA span {
+		font-size: 12px !important;
+		opacity: 0.6 !important;
+		text-align: center !important;
+		margin-top: 12px !important;
+		color: white !important;
+	}
+	
+	/* Override any inline styles */
+	#audienceful-5ejxTA * {
+		color: white !important;
+	}
+	
+	#audienceful-5ejxTA input,
+	#audienceful-5ejxTA input[type="text"],
+	#audienceful-5ejxTA input[type="email"] {
+		color: white !important;
+		background-color: rgba(20, 20, 20, 0.8) !important;
 	}
 </style>
